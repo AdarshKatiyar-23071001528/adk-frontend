@@ -1,0 +1,58 @@
+
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+:root {
+  --buyNow: #28a745;
+  --addCart: #e91e63;
+  --primary-color: #007bff;
+  --background-color: #ffffff;
+  --secondary-color: #f1f1f1;
+  --sale-color: #ff0000;
+  --body-color: #0a0a0a6f;
+  --logo-color: #c3244bb9;
+  --favorite-color: #3498db;
+  --text-color: #000000;
+  --nav-height: 100px;
+  --set-black-border: 1px solid rgba(0, 0, 0, 0.509);
+  --set-blue-border: 1px solid #3498db;
+  --full: 100%;
+  --transparent-background: repeating-linear-gradient(
+    transparent,
+    transparent 10%,
+    transparent
+  );
+  --box-shadow: 1px 1px 1px;
+  --text-shadow: 1px 1px 3px;
+  --full-strength-height: 100vh;
+  --full-strength-width: 100vw;
+}
+:root {
+  --cart-bg: #ffffff;
+  --cart-text: #333333;
+  --cart-price: #27ae60;
+  --cart-button: #3498db;
+  --cart-button-text: #ffffff;
+  --remove-button: #e74c3c;
+  --cart-card-height: 110px;
+  --cart-card-width: 150px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--cart-bg);
+}
+

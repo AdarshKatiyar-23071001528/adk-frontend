@@ -1,0 +1,92 @@
+.admin_RegisterContainer,
+.admin_LoginContainer{
+    height: var(--full-strength-height);
+    width: var(--full);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color:var(--background-color); */
+
+    .admin_Register,
+    .admin_Login{
+        height: fit-content;
+        width: 400px;
+        padding: 20px;
+        /* background-color: var(--logo-color); */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* align-items: center; */
+        border-radius: 28px;
+        gap: 10px;
+
+
+        .adminName,
+        .adminEmail,
+        .adminPassword,
+        .adminConfirmPassword,
+        .adminTitle{
+
+            width: 300px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 20px; 
+            background-color: var(--background-color);
+            border-radius: 20px;
+
+        }
+
+
+            input{
+                border: none;
+                outline: none;
+                background: none;
+
+                width: var(--full);
+                padding-left: 3px;
+                padding-top:5px;
+                padding-bottom: 5px;
+            }
+    
+            
+        }
+
+        .logo{
+            width: var(--full);
+            padding: 10px 0px 20px 10px;
+            height: fit-content;
+
+            h1{
+                font-size: 50px;
+            }
+            p{
+                font-size: 30px;
+            
+            }
+        }
+        .btn{
+    
+            padding: 10px;
+            width: var(--full);
+            display: flex;
+            justify-content: end;
+            
+
+            button{
+                padding: 7px 40px;
+                border: none;
+                border-radius:10px;
+                background-color: var(--background-color);
+                font-weight: 700;
+                transition: all 0.1s;
+                &:hover{
+                    background-color: var(--secondary-color);
+                }
+            }
+        }
+
+
+    }
+

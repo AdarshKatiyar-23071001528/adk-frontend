@@ -1,0 +1,38 @@
+.table-container{
+    height: 86%;
+    overflow-y: auto;
+
+button{
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.edit{
+    color: green;
+}
+.del{
+    color: red;
+}
+   
+}
+
+
+.table{
+    width: 100%;
+    table-layout: fixed;
+    height: 100px;
+    overflow: hidden;
+    td{
+        text-align: center;
+    }
+
+}
+
+.btn-container{
+    button{
+        background-color:  yellow;
+        border-radius: 10px;
+    }
+    
+}

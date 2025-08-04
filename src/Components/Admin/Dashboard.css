@@ -1,0 +1,23 @@
+.dashboard-container{
+    height: var(--full);
+    width: var(--full);
+    background-color: aqua;
+    padding: 10px;
+
+    .card-container{
+        height: 30%;
+        width: 70%;
+        /* background-color: azure; */
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        .order,.user,.product{
+            height: 100%;
+            width: 30%;
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 5px;
+        }
+    }
+}

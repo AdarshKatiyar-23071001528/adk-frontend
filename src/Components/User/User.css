@@ -1,0 +1,51 @@
+.animate-rise-rotate{
+    animation: rise-rotate 7s linear infinite;
+    transition: all 0.3s;
+}
+
+@keyframes rise-rotate {
+    0%{
+        transform: translateY(10px) rotate(0deg);
+        border-radius: 10%;
+        opacity: 1;
+    }
+    20%{
+        transform: translateY(-20vh) rotate(100deg);
+        border-radius: 20%;
+        opacity: 0.8;
+    }
+    40%{
+        transform: translateY(-40vh) rotate(200deg);
+        border-radius: 30%;
+        opacity: 0.6;
+    }
+    60%{
+           transform: translateY(-60vh) rotate(300deg);
+        border-radius: 40%;
+        opacity: 0.4;
+    }
+    80%{
+          transform: translateY(-80vh) rotate(360deg);
+        border-radius: 45%;
+        opacity: 0.2;
+    }
+    100%{
+        transform: translateY(-100vh) rotate(0deg);
+        border-radius: 50%;
+        opacity: 0;
+    }
+}
+.glow-bubble {
+  filter: blur(2px);
+  opacity: 0.6;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+
+.setNone{
+    outline: none;
+    border: none;
+    background: none;
+
+}
