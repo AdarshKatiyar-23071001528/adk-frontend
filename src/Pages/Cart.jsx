@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../Context/AppContext";
-import axios from "axios";
+import axios from "../Components/axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Cart = () => {
@@ -38,7 +38,7 @@ const Cart = () => {
     const { productId, productPrice, productTitle, productImg } = item;
     try {
       await axios.post(
-        "http://localhost:2002/api/cart/add",
+        "/api/cart/add",
         { productId, productQty: 1, productPrice, productTitle, productImg },
         {
           headers: {
@@ -55,7 +55,7 @@ const Cart = () => {
   const delete_item = async (id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:2002/api/cart/delete/${id}`,
+        `/api/cart/delete/${id}`,
         {
           headers: {
             "Content-Type": "Application/json",
@@ -73,7 +73,7 @@ const Cart = () => {
 
   const decrease_qty = async (id) => {
     try {
-      await axios.get(`http://localhost:2002/api/cart/decreaseQty/${id}`, {
+      await axios.get(`/api/cart/decreaseQty/${id}`, {
         headers: {
           "Content-Type": "Application/json",
           userToken: userToken,
@@ -89,7 +89,7 @@ const Cart = () => {
   const fetchCart = async () => {
     if (!userToken) return;
     try {
-      const res = await axios.get("http://localhost:2002/api/cart/show", {
+      const res = await axios.get("/api/cart/show", {
         headers: {
           "Content-Type": "Application/json",
           userToken: userToken,
@@ -106,7 +106,7 @@ const Cart = () => {
 
   //clear cart
   const clearCart = async () => {
-    await axios.delete("http://localhost:2002/api/cart/clear", {
+    await axios.delete("/api/cart/clear", {
       headers: {
         "Content-Type": "Application/json",
         userToken,
@@ -125,7 +125,7 @@ const Cart = () => {
       if (!userToken) return;
       try {
         const res = await axios.get(
-          "http://localhost:2002/api/address/allAddress",
+          "/api/address/allAddress",
           {
             headers: {
               "Content-Type": "Application/json",
@@ -156,7 +156,7 @@ const Cart = () => {
       if (!latestAddress || !userToken) return;
       try {
         const res = await axios.get(
-          `http://localhost:2002/api/address/specificAddress/${latestAddress}`,
+          `/api/address/specificAddress/${latestAddress}`,
           {
             headers: {
               "Content-Type": "Application/json",
@@ -183,7 +183,7 @@ const Cart = () => {
   const handlePayment = async () => {
     try {
       const orderResponse = await axios.post(
-        `http://localhost:2002/api/payment/checkout`,
+        `/api/payment/checkout`,
         {
           amount: totalPrice,
           cartItems: cart,
@@ -213,7 +213,7 @@ const Cart = () => {
           };
         
           const api = await axios.post(
-            `http://localhost:2002/api/payment/verify`,
+            `/api/payment/verify`,
             paymentData
           );
           

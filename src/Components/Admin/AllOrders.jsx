@@ -3,7 +3,7 @@ import { useContext } from "react";
 import AppContext from "../../Context/AppContext";
 import { useEffect } from "react";
 import { useState } from "react";
-import axios from "axios";
+import axios from "../axios";
 
 const AllOrders = () => {
   const token = localStorage.getItem("admin-Token");
@@ -15,7 +15,7 @@ const AllOrders = () => {
     else {
       const pay = async () => {
         const res = await axios.get(
-          "http://localhost:2002/api/admin/payments",
+          "/api/admin/payments",
           {
             headers: {
               "Content-Type": "Application/json",

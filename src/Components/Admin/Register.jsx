@@ -1,7 +1,7 @@
 import React from "react";
 import "./Admin.css";
 import Bubble from "../../Common/Bubble";
-import axios from "axios";
+import axios from "../axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -23,7 +23,7 @@ const Register = () => {
 
   const registered = async() =>{
     try {
-      const res = await axios.post('http://localhost:2002/api/admin/register',formData,{
+      const res = await axios.post('/api/admin/register',formData,{
       headers:{
         "Content-Type" : "Application/json"
       },

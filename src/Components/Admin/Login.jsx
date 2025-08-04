@@ -2,7 +2,7 @@ import { useState } from "react";
 import {useNavigate} from 'react-router-dom';
 import "./Admin.css";
 import Bubble from "../../Common/Bubble";
-import axios from "axios";
+import axios from "../axios";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -28,7 +28,7 @@ const Login = () => {
     }
     else{
       try {
-        const res = await axios.post('http://localhost:2002/api/admin/login',formData);
+        const res = await axios.post('/api/admin/login',formData);
         localStorage.setItem('admin-Token',res?.data?.adminToken);
         if(res?.data?.success){
           navigate('/admin/home');

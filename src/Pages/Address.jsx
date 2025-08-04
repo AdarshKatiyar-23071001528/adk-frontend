@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../Components/axios";
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../Context/AppContext";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -41,7 +41,7 @@ const Address = () => {
   useEffect(() => {
     const fetchAllAddress = async () => {
       try {
-        const res = await axios.get("http://localhost:2002/api/address/allAddress", {
+        const res = await axios.get("/api/address/allAddress", {
           headers: {
             "Content-Type": "application/json",
             userToken,
@@ -60,7 +60,7 @@ const Address = () => {
   const addAddress = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:2002/api/address/add",
+        "/api/address/add",
         addressData,
         {
           headers: {

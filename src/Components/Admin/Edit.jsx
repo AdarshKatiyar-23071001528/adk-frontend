@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const Edit = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       const res = await axios.get(
-        `http://localhost:2002/api/product/specificProduct/${id}`
+        `/api/product/specificProduct/${id}`
       );
       setProduct(res.data.product);
 
@@ -54,7 +54,7 @@ const Edit = () => {
       ) {
         alert("Please Fill all field");
       } else {
-        const url = "http://localhost:2002/api/product/update";
+        const url = "/api/product/update";
         await axios.put(`${url}/${id}`, formData);
         alert("Product updated successfully");
       }

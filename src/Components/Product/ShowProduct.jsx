@@ -4,7 +4,7 @@ import "./ShowProduct.css";
 import { Link } from "react-router-dom";
 import Error from "../../Pages/Error";
 import Loading from "../../Pages/Loading";
-import axios from "axios";
+import axios from "../axios";
 const slugify = (text) =>
   text
     .toLowerCase()
@@ -43,7 +43,7 @@ const ShowProduct = () => {
     try {
       const { _id, productPrice, productTitle, productImg } = item;
       const res = await axios.post(
-        "http://localhost:2002/api/cart/add",
+        "/api/cart/add",
         {
           productId: _id,
           productQty: 1,

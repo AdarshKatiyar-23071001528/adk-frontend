@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./User.css";
-import Bubble from "../../Common/Bubble";
+
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../axios";
 
 const UserRegister = () => {
   let navigate = useNavigate();
@@ -35,7 +35,7 @@ const UserRegister = () => {
   const register = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:2002/api/user/register",
+        "/api/user/register",
         formData,
         {
           headers: {

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../Components/axios";
 import React, { useEffect, useState } from "react";
 
 const OrderConfirmation = () => {
@@ -10,7 +10,7 @@ const OrderConfirmation = () => {
     const fetchOrderDetails = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:2002/api/payment/allOrder",
+          "/api/payment/allOrder",
           {
             headers: {
               "Content-Type": "Application/json",

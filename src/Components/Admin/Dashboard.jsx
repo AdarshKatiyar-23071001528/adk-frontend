@@ -1,7 +1,7 @@
 import React from "react";
 import "./Dashboard.css";
 import { useState } from "react";
-import axios from "axios";
+import axios from "../axios";
 import { useEffect } from "react";
 import { useContext } from "react";
 import AppContext from "../../Context/AppContext";
@@ -20,7 +20,7 @@ const Dashboard = () => {
     else {
       const checkVaildation = async () => {
         try {
-          const res = await axios.get("http://localhost:2002/api/admin/vaild", {
+          const res = await axios.get("/api/admin/vaild", {
             headers: {
               "Content-Type": "Application/json",
               adminToken: admin_Token,
@@ -44,7 +44,7 @@ const Dashboard = () => {
     if(!token) return;
     else{
       const pay = async() =>{
-        const res = await axios.get("http://localhost:2002/api/admin/payments",{
+        const res = await axios.get("/api/admin/payments",{
           headers:{
             "Content-Type" : "Application/json",
               adminToken : token,

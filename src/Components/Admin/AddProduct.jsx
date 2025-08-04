@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./AddProduct.css";
+import "../axios";
 import { useNavigate } from "react-router-dom";
 const AddProduct = () => {
   const [formData, setFormData] = useState({
@@ -39,7 +39,7 @@ const AddProduct = () => {
         alert("Please Fill all field");
       }
       else {
-        const url = "http://localhost:2002/api/product/add";
+        const url = "/api/product/add";
         await axios.post(`${url}`, formData);
         alert("product add successfully");
         navigate("/admin/home/products");

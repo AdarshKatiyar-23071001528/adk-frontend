@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Nav.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import AppContext from "../Context/AppContext";
-import axios from "axios";
+import axios from "../Components/axios";
 
 const Nav = () => {
   const [profileImg, setProfileImg] = useState();
@@ -53,7 +53,7 @@ const Nav = () => {
   // for only one admin can be operate
   useEffect(()=>{
     const admin = async()=>{
-      const res = await axios.get('http://localhost:2002/api/admin/length');
+      const res = await axios.get('/api/admin/length');
       setAdmin(res?.data?.length);
     }
     admin();

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../Components/axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Error from "./Error";
@@ -46,7 +46,7 @@ const ViewProduct = () => {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:2002/api/product/specificProduct/${id}`
+          `/api/product/specificProduct/${id}`
         );
 
         if (res.data.success && res.data.product) {

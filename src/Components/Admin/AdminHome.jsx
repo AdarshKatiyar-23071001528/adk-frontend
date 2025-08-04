@@ -7,7 +7,7 @@ import AllProduct from "./AllProduct";
 import Edit from "./Edit";
 import Users from "./Users";
 import { useEffect } from "react";
-import axios from "axios";
+import axios from "../axios";
 import { useState } from "react";
 import AllOrders from "./AllOrders";
 const AdminHome = () => {
@@ -19,7 +19,7 @@ const AdminHome = () => {
     else {
       const checkVaildation = async () => {
         try {
-          const res = await axios.get("http://localhost:2002/api/admin/vaild", {
+          const res = await axios.get("/api/admin/vaild", {
             headers: {
               "Content-Type": "Application/json",
               adminToken: admin_Token,

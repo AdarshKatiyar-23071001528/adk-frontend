@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../../Context/AppContext";
 import "./AllProduct.css";
-import axios from "axios";
+import axios from "../axios";
 import { useNavigate } from "react-router-dom";
 
 const AllProduct = () => {
@@ -18,7 +18,7 @@ const AllProduct = () => {
 
 
   const del = async (id) => {
-    const url = "http://localhost:2002/api/product/delete";
+    const url = "/api/product/delete";
     await axios.delete(`${url}/${id}`);
     setProductList((pre) => pre.filter((item) => item._id !== id));
   };

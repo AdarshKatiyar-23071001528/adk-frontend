@@ -1,9 +1,9 @@
 import React, { use, useEffect, useState } from "react";
 import AppContext from "./AppContext";
-import axios from "axios";
+import axios from "../Components/axios";
 
 const AppState = (props) => {
-  const url = "http://localhost:2002/api";
+  const url = "/api";
   const [product, setProduct] = useState([]);
   const [viewId, setViewId] = useState();
   const [specificProduct, setSpecificProduct] = useState([]);
@@ -20,7 +20,7 @@ const AppState = (props) => {
   useEffect(() => {
     const fetchUser = async () => {
       const findUser = await axios.get(
-        "http://localhost:2002/api/user/allUser"
+        "/api/user/allUser"
       );
 
       setUsers(findUser?.data?.users);

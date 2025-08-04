@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import "./User.css";
 import Bubble from "../../Common/Bubble";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../axios";
 import AppContext from "../../Context/AppContext";
 
 const UserLogin = () => {
@@ -29,7 +29,7 @@ const UserLogin = () => {
   const fetchLogin = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:2002/api/user/login",
+        "/api/user/login",
         formData,
         {
           headers: {
