@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./AddProduct.css";
+<<<<<<< HEAD
 import axios from '../axios';
+=======
+import axois from "../axios";
+>>>>>>> b1426b7b961068bb24e6e37fa4227782010847f6
 import { useNavigate } from "react-router-dom";
 const AddProduct = () => {
   const [formData, setFormData] = useState({
