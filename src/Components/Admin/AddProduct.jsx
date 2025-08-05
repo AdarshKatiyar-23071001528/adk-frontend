@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./AddProduct.css";
-<<<<<<< HEAD
-import axios from '../axios';
-=======
-import axois from "../axios";
->>>>>>> b1426b7b961068bb24e6e37fa4227782010847f6
+
+import axios from "../axios";
+
 import { useNavigate } from "react-router-dom";
 const AddProduct = () => {
   const [formData, setFormData] = useState({
@@ -16,10 +14,7 @@ const AddProduct = () => {
     productQty: "",
   });
 
-
-
   let navigate = useNavigate();
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +24,6 @@ const AddProduct = () => {
     }));
   };
 
-  
   const sendData = async () => {
     try {
       if (
@@ -39,10 +33,9 @@ const AddProduct = () => {
         formData.productImg == "" ||
         formData.productPrice == "" ||
         formData.productQty == ""
-      ){
+      ) {
         alert("Please Fill all field");
-      }
-      else {
+      } else {
         const url = "/api/product/add";
         await axios.post(`${url}`, formData);
         alert("product add successfully");
