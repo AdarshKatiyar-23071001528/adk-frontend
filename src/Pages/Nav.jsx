@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./Nav.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import AppContext from "../Context/AppContext";
@@ -9,7 +9,7 @@ const Nav = () => {
   const [admin, setAdmin] = useState();
   const [login, setLogin] = useState(false);
   const [searchBar, setSearchBar] = useState("");
-  const [isOptionOpen,setIsOption] = useState(false);
+  const [isOptionOpen, setIsOption] = useState(false);
   const { userToken, setFilterProduct, product, cartLength, setCartLength } =
     useContext(AppContext);
 
@@ -24,6 +24,7 @@ const Nav = () => {
 
   useEffect(() => {
     try {
+      console.log(product);
       const filtered = product.filter((data) =>
         data?.productTitle?.toLowerCase().includes(searchBar.toLowerCase())
       );
@@ -44,29 +45,52 @@ const Nav = () => {
     currentParams.set("cart", "open");
     navigate(`${location.pathname}?${currentParams.toString()}`);
   };
+
   const onlogin = () => {
     const currentParams = new URLSearchParams(location.search);
     currentParams.set("login", "open");
     navigate(`${location.pathname}?${currentParams.toString()}`);
   };
 
-  // for only one admin can be operate
-  useEffect(()=>{
-    const admin = async()=>{
-      const res = await axios.get('/api/admin/length');
-      setAdmin(res?.data?.length);
-    }
-    admin();
-  },[])
-  const handleAdmin = () =>{
-    if(admin<1){
-      navigate('/admin-protected/register');
-    }
-    else{
-      navigate('/admin-first-secured/login');
-    }
+    const dropdownRef = useRef(null); // 🔹 Step 1
 
-  }
+  // 🔹 Step 2: Detect outside click
+  useEffect(() => {
+ 
+    const handleClickOutside = (event) => {
+         console.log(dropdownRef,dropdownRef.current.contains(event.target));
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+     
+        setIsOption(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside); // or "click"
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // for only one admin can be operate
+  useEffect(() => {
+    const admin = async () => {
+      const res = await axios.get("/api/admin/length");
+      setAdmin(res?.data?.length);
+    };
+    admin();
+  }, []);
+
+  // handle admin login
+  const handleAdmin = () => {
+    if (admin < 1) {
+      navigate("/admin-protected/register");
+    } else {
+      navigate("/admin-first-secured/login");
+    }
+  };
 
   return (
     <div>
@@ -92,9 +116,11 @@ const Nav = () => {
           </div>
         </div>
         <div className="thirdPart">
-          <div className="otherContainer">
-            <div className="menuContainer">
-              <div className="cartContainer relative" onClick={openCart}>
+          <div className="otherContainer ">
+            <div className="menuContainer bg-blue-200">
+
+
+              <div className="cartContainer relative" ref={dropdownRef} onClick={openCart}>
                 <span className="material-symbols-outlined ">
                   shopping_cart
                 </span>
@@ -126,19 +152,31 @@ const Nav = () => {
               </div>
 
               <div
-                className="flex flex-col gap-1 items-center justify-center relative"
+                className="flex flex-col gap-1 items-center justify-center cursor-pointer "
                 onClick={() => setIsOption(!isOptionOpen)}
               >
                 <span class="material-symbols-outlined">menu</span>
-
-
-                {isOptionOpen && (
-                  <div className="absolute top-[30px] cursor-pointer bg-blue-300  text-center ">
-                    <option value="Logout" className="hover:bg-blue-400 p-2 w-[100px]" onClick={()=>handleLogout()}>Logout</option>
-                <option value="Admin"  className="hover:bg-blue-400 p-2 w-[100px]" onClick={()=>handleAdmin()}>Admin</option>
-                  </div>
-                )}
               </div>
+
+              {/* dropdown */}
+              {isOptionOpen && (
+                <div className="absolute top-[-90px] left md:top-[45px] cursor-pointer bg-blue-300 text-center w-full md:w-[100px] rounded-xl">
+                  <div
+                    className="hover:bg-blue-400 p-2 w-full md:w-[100px] rounded-tl-xl rounded-tr-xl"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </div>
+                  <div
+                    className="hover:bg-blue-400 p-2 w-full md:w-[100px] rounded-bl-xl rounded-br-xl"
+                    onClick={handleAdmin}
+                  >
+                    Admin
+                  </div>
+                </div>
+              )}
+
+
             </div>
           </div>
         </div>

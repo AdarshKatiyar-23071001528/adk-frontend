@@ -1,11 +1,17 @@
 .productContainer {
   height: var(--full);
-  width: var(--full);
+  width: 100vw;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   padding: var(--nav-height) 10px 10px 10px;
+  overflow: hidden;
 
+  @media (max-width:640px) {
+    justify-content: center;
+    padding: 140px 10px 100px 10px;
+
+  }
 
   .product {
     /* background-color: aqua; */
@@ -66,6 +72,7 @@
     border-radius: 5px;
     border: none;
     outline: none;
+    border: 1px solid rgba(128, 128, 128, 0.477);
     backdrop-filter: blur(10px);
     color: var(--text-color);
     font-weight: 600;

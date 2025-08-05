@@ -16,9 +16,7 @@ const Edit = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await axios.get(
-        `/api/product/specificProduct/${id}`
-      );
+      const res = await axios.get(`/api/product/specificProduct/${id}`);
       setProduct(res.data.product);
 
       // 👇 FormData ko product se set karo jab data aaye

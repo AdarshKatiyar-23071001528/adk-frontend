@@ -91,7 +91,7 @@ const ShowProduct = () => {
           to={`/product/${slugify(item.productTitle)}/${item._id}`}
         >
           <div
-            className="product border-2 bg-blue-400 md:w-1/5"
+            className="product border border-gray-400 md:w-1/5"
             onClick={() => setViewId(item._id)}
           >
             <div className="productImg">

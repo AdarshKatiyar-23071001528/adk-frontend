@@ -51,7 +51,7 @@ const Home = () => {
   }, []);
 
   return (
-    <>
+    <div className="">
       <ShowProduct />
 
       {isCartOpen && (
@@ -72,7 +72,7 @@ const Home = () => {
       {isLoginOpen && (
         <>
           <div
-            className="fixed inset-0 bg-black bg-opacity-40  z-50"
+            className="fixed inset-0 bg-black bg-opacity-40 z-50 "
             onClick={closeLogin}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
@@ -124,7 +124,7 @@ const Home = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 
