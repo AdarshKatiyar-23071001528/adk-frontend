@@ -62,7 +62,7 @@ const Home = () => {
       )}
 
       <div
-        className={`fixed top-0 right-0 h-full w-[400px] bg-blue-300 z-50 transition-transform duration-300 ease-in-out overflow-y-auto shadow-lg ${
+        className={`fixed top-0 right-0 h-full w-full md:w-[400px] bg-blue-300 z-50 transition-transform duration-300 ease-in-out overflow-y-auto shadow-lg ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -76,7 +76,7 @@ const Home = () => {
             onClick={closeLogin}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="p-6 rounded shadow-lg w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="p-6 rounded shadow-lg w-full h-[600px] md:w-[400px] md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <UserLogin />
             </div>
           </div>
@@ -104,7 +104,7 @@ const Home = () => {
             onClick={closeConfirmation}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="bg-white border rounded shadow-xl w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="bg-white border rounded shadow-xl w-full md:w-[400px] h-[600px] md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <OrderConfirmation />
             </div>
           </div>

@@ -7,10 +7,10 @@ const Cart = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { userToken, setCartLength,userId,setUserId } = useContext(AppContext);
+  const { userToken, setCartLength, userId, setUserId } =
+    useContext(AppContext);
   const [cart, setCart] = useState([]);
   const [address, setAddress] = useState([]);
-  const [showAddress, setShowAllAdress] = useState(false);
   const latestAddress = localStorage.getItem("userAddress");
   const currentUrl = new URLSearchParams(location.search);
 
@@ -26,12 +26,17 @@ const Cart = () => {
     navigate(`${location.pathname}?${params.toString()}`);
   };
 
-  const confirmOrder = () =>{
+  const confirmOrder = () => {
     const fetchAddress = new URLSearchParams(location.search);
-    fetchAddress.set('orderconfirm', 'open');
+    fetchAddress.set("orderconfirm", "open");
     navigate(`${location.pathname}?${fetchAddress.toString()}`);
-  } 
+  };
 
+  const closeCart = () => {
+    const fetchUrl = new URLSearchParams(location.search);
+    fetchUrl.delete("cart");
+    navigate(`${location.pathname}?${fetchUrl.toString()}`);
+  };
   const addCart = async (e, item) => {
     e.stopPropagation();
     e.preventDefault();
@@ -54,16 +59,13 @@ const Cart = () => {
 
   const delete_item = async (id) => {
     try {
-      const res = await axios.delete(
-        `/api/cart/delete/${id}`,
-        {
-          headers: {
-            "Content-Type": "Application/json",
-            userToken: userToken,
-          },
-          withCredentials: true,
-        }
-      );
+      const res = await axios.delete(`/api/cart/delete/${id}`, {
+        headers: {
+          "Content-Type": "Application/json",
+          userToken: userToken,
+        },
+        withCredentials: true,
+      });
       alert(res.data.message);
       fetchCart();
     } catch (error) {
@@ -124,16 +126,13 @@ const Cart = () => {
     const fetchAddress = async () => {
       if (!userToken) return;
       try {
-        const res = await axios.get(
-          "/api/address/allAddress",
-          {
-            headers: {
-              "Content-Type": "Application/json",
-              userToken,
-            },
-            withCredentialsL: true,
-          }
-        );
+        const res = await axios.get("/api/address/allAddress", {
+          headers: {
+            "Content-Type": "Application/json",
+            userToken,
+          },
+          withCredentialsL: true,
+        });
 
         setUserId(res?.data?.address?.userID);
         const allAddress = res?.data?.address?.fullAddress;
@@ -182,15 +181,12 @@ const Cart = () => {
 
   const handlePayment = async () => {
     try {
-      const orderResponse = await axios.post(
-        `/api/payment/checkout`,
-        {
-          amount: totalPrice,
-          cartItems: cart,
-          userShipping: address,
-          userId: userId,
-        }
-      );
+      const orderResponse = await axios.post(`/api/payment/checkout`, {
+        amount: totalPrice,
+        cartItems: cart,
+        userShipping: address,
+        userId: userId,
+      });
       console.log(orderResponse);
       const { orderId, amount: orderAmount } = orderResponse.data;
       const options = {
@@ -211,19 +207,15 @@ const Cart = () => {
             userId: userId,
             userShipping: address,
           };
-        
-          const api = await axios.post(
-            `/api/payment/verify`,
-            paymentData
-          );
-          
+
+          const api = await axios.post(`/api/payment/verify`, paymentData);
+
           // if order confirm
           if (api?.data?.success) {
-            alert('Order Successful');
+            alert("Order Successful");
             confirmOrder();
             clearCart();
-          }
-          else{
+          } else {
             alert("Payment is Failed");
             return;
           }
@@ -251,7 +243,15 @@ const Cart = () => {
   return (
     <>
       {!userToken ? (
-        <div className="relative w-[400px] h-screen bg-black-10 flex justify-center items-center flex-col p-10 gap-6">
+        <div className="relative w-full h-screen bg-black-10 flex items-center justify-center  flex-col p-10 gap-6 relative">
+          <div
+            className="flex items-center absolute top-4 left-5 "
+            onClick={closeCart}
+          >
+            <span className="material-symbols-outlined">arrow_back_ios</span>
+            <h1 className="font-bold text-[16px] md:text-[24px]">Cart</h1>
+          </div>
+
           <p className="font-bold">Please Login first</p>
           <button
             onClick={openLogin}
@@ -262,86 +262,67 @@ const Cart = () => {
         </div>
       ) : (
         <>
-          <div className="table-container min-h-screen w-[400px] flex">
-            <div className="h-full bg-blue-300 w-[400px]  flex flex-col p-5 h-screen justify-between overflow-auto fixed top-0 right-0 bottom-0">
-              
-              
+          <div className="table-container min-h-screen w-full flex">
+            <div className="h-full bg-blue-300 w-full  flex flex-col p-5 h-screen justify-between overflow-auto fixed top-0 right-0 bottom-0">
               {/* cart content and arrow */}
-              <div className="flex items-center">
+              <div className="flex items-center" onClick={closeCart}>
                 <span className="material-symbols-outlined">
                   arrow_back_ios
                 </span>
-                <h1 className="font-bold text-[24px]">Cart</h1>
+                <h1 className="font-bold text-[16px] md:text-[24px]">Cart</h1>
               </div>
 
               {/* items */}
               <div>
                 <h1 className="font-bold text-xl">Your items</h1>
 
-                <div className="overflow-x-auto pt-5">
-                  <table className="w-full">
-                    {/* <thead>
-                      <tr className="bg-gray-200 h-12 text-center">
-                        <th className="w-[10%]">Image</th>
-                        <th className=" w-[5%]">Items</th>
-                        <th className=" w-[5%]">Quantity</th>
-                        <th className="w-[5%]">Price</th>
-                        <th className="w-[5%]">Remove</th>
-                      </tr>
-                    </thead> */}
+                
 
-                    <tbody className="max-h-[300px] overflow-auto">
-                      {cart?.map((item, index) => (
-                        <tr
-                          key={index}
-                          className="text-center  flex items-center justify-around"
-                        >
-                          <td className="imgContainer flex justify-center mb-1 mt-1">
-                            <img
-                              src={item.productImg}
-                              alt="product Image"
-                              style={{
-                                width: "40px",
-                                height: "40px",
-                                objectFit: "cover",
-                                borderRadius: "5px",
-                              }}
-                            />
-                          </td>
-                          <td className="text-center">{item.productTitle}</td>
-                          <td className="flex text-center items-center justify-center">
-                            <button
-                              className="pr-2 font-bold text-xl text-green-500"
-                              onClick={(e) => addCart(e, item)}
-                            >
-                              +
-                            </button>
-                            {item.productQty}
-                            <button
-                              className="pl-2 font-bold text-2xl text-red-500"
-                              onClick={() => decrease_qty(item.productId)}
-                            >
-                              -
-                            </button>
-                          </td>
-                          <td className="text-center">₹{item.productPrice}</td>
-                          <td className="text-center">
-                            <button
-                              onClick={() => delete_item(item.productId)}
-                              className="text-red-600 text-center flex items-center justify-center"
-                            >
-                              <span class="material-symbols-outlined del">
-                                delete
-                              </span>
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                    <div className="overflow-x-auto max-h-[150px] md:max-h-[200px] overflow-y-auto w-full">
+                      <table className="table-fixed w-full border-collapse text-sm">
+                        <tbody>
+                          {cart?.map((item, index) => (
+                            <tr key={index} className="text-center border-b">
+                              <td className="w-[20%] p-2">
+                                <img
+                                  src={item.productImg}
+                                  alt="product"
+                                  className="w-10 h-10 object-cover rounded mx-auto"
+                                />
+                              </td>
+
+                              <td className="w-[25%] p-2 truncate">
+                                {item.productTitle}
+                              </td>
+
+                              <td className="w-[25%] p-2">
+                                <div className="flex items-center justify-center gap-2">
+                                  <button
+                                    className="font-bold text-xl text-green-500"
+                                    onClick={(e) => addCart(e, item)}
+                                  >
+                                    +
+                                  </button>
+                                  <span>{item.productQty}</span>
+                                  <button
+                                    className="font-bold text-2xl text-red-500"
+                                    onClick={() => decrease_qty(item.productId)}
+                                  >
+                                    -
+                                  </button>
+                                </div>
+                              </td>
+
+                              <td className="w-[25%] p-2">
+                                ₹{item.productPrice}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                  
                 </div>
               </div>
-
 
               {/* //address */}
               <div>
@@ -362,7 +343,6 @@ const Cart = () => {
               </div>
 
               <div>Order Summary</div>
-
 
               {/* buttons */}
               <div className="gap-2 flex flex-col">
@@ -385,8 +365,6 @@ const Cart = () => {
                   </p>
                 </button>
               </div>
-
-
             </div>
           </div>
         </>

@@ -6,7 +6,7 @@ import axios from "../Components/axios";
 
 const Nav = () => {
   const [profileImg, setProfileImg] = useState();
-  const [admin, setAdmin] = useState();
+  const [Admin, setAdmin] = useState();
   const [login, setLogin] = useState(false);
   const [searchBar, setSearchBar] = useState("");
   const [isOptionOpen, setIsOption] = useState(false);
@@ -52,18 +52,12 @@ const Nav = () => {
     navigate(`${location.pathname}?${currentParams.toString()}`);
   };
 
-    const dropdownRef = useRef(null); // 🔹 Step 1
+  const dropdownRef = useRef(null); // 🔹 Step 1
 
   // 🔹 Step 2: Detect outside click
   useEffect(() => {
- 
     const handleClickOutside = (event) => {
-         console.log(dropdownRef,dropdownRef.current.contains(event.target));
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
-     
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOption(false);
       }
     };
@@ -85,7 +79,8 @@ const Nav = () => {
 
   // handle admin login
   const handleAdmin = () => {
-    if (admin < 1) {
+    console.log('jo')
+    if (Admin < 1) {
       navigate("/admin-protected/register");
     } else {
       navigate("/admin-first-secured/login");
@@ -115,12 +110,14 @@ const Nav = () => {
             <span className="material-symbols-outlined">search</span>
           </div>
         </div>
-        <div className="thirdPart">
+        <div className="thirdPart " ref={dropdownRef}>
           <div className="otherContainer ">
             <div className="menuContainer bg-blue-200">
-
-
-              <div className="cartContainer relative" ref={dropdownRef} onClick={openCart}>
+              <div
+                className="cartContainer relative"
+                
+                onClick={openCart}
+              >
                 <span className="material-symbols-outlined ">
                   shopping_cart
                 </span>
@@ -175,8 +172,6 @@ const Nav = () => {
                   </div>
                 </div>
               )}
-
-
             </div>
           </div>
         </div>

@@ -1,11 +1,6 @@
-
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
 
 :root {
   --buyNow: #28a745;
@@ -41,6 +36,10 @@
   --remove-button: #e74c3c;
   --cart-card-height: 110px;
   --cart-card-width: 150px;
+  @media (max-width: 430px) {
+    --cart-card-height: 90px;
+    --cart-card-width: 100px;
+  }
 }
 
 * {
@@ -55,4 +54,3 @@ body {
   width: 100vw;
   background-color: var(--cart-bg);
 }
-
