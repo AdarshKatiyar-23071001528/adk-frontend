@@ -5,11 +5,15 @@ import { Link } from "react-router-dom";
 import Error from "../../Pages/Error";
 import Loading from "../../Pages/Loading";
 import axios from "../axios";
+
+// replace " " from "-" 
 const slugify = (text) =>
   text
     .toLowerCase()
     .replace(/\s+/g, "-")
     .replace(/[^\w\-]+/g, "");
+
+
 
 const ShowProduct = () => {
   const { setViewId, filterProduct, userToken, setCartLength } =
@@ -76,12 +80,8 @@ const ShowProduct = () => {
 
   if (loading) return <Loading />;
   if (error || !allProduct) return <Error />;
-  if (!match)
-    return (
-      <div className="h-screen w-screen flex justify-center items-center font-bold text-[50px] text-red-500">
-        Not match Product
-      </div>
-    );
+  // if (!match) return;
+    
 
   return (
     <div className="productContainer">
@@ -91,7 +91,7 @@ const ShowProduct = () => {
           to={`/product/${slugify(item.productTitle)}/${item._id}`}
         >
           <div
-            className="product border border-gray-400 md:w-1/5"
+            className="product border border-gray-200 md:w-1/5"
             onClick={() => setViewId(item._id)}
           >
             <div className="productImg">

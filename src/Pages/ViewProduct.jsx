@@ -124,11 +124,11 @@ const ViewProduct = () => {
       {isLoginOpen && (
         <>
           <div
-            className="fixed inset-0 bg-black bg-opacity-40  z-50"
+            className="fixed inset-0 bg-black bg-opacity-40  z-40"
             onClick={closeLogin}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="p-6 rounded shadow-lg w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="rounded shadow-lg w-full h-full md:w-[400px] md:Lh-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <UserLogin />
             </div>
           </div>
@@ -137,11 +137,11 @@ const ViewProduct = () => {
        {isRegisterOpen && (
         <>
           <div
-            className="fixed inset-0 bg-black bg-opacity-40  z-50"
+            className="fixed inset-0 bg-black bg-opacity-40  z-40"
             onClick={closeRegister}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="p-6 rounded shadow-lg w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="rounded shadow-lg w-full h-full md:w-[400px] md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <UserRegister />
             </div>
           </div>
@@ -156,7 +156,7 @@ const ViewProduct = () => {
           ></div>
 
           <div
-            className={`fixed top-0 right-0 h-full w-[400px] bg-blue-300 z-50 transition-transform duration-300 ease-in-out overflow-y-hidden shadow-lg ${
+            className={`fixed top-0 right-0 h-full w-full md:w-[400px] bg-blue-300 z-50 transition-transform duration-300 ease-in-out overflow-y-hidden shadow-lg ${
               isCartOpen ? "translate-x-0" : "translate-x-full"
             }`}
           >

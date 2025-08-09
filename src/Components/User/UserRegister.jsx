@@ -8,16 +8,22 @@ const UserRegister = () => {
   let navigate = useNavigate();
   let location = useLocation();
   const currentParams = new URLSearchParams(location.search);
-  
-  const alreadyUser = () =>{
-    currentParams.delete('register');
+
+  const alreadyUser = () => {
+    currentParams.delete("register");
     navigate(`${location.pathname}?${currentParams.toString()}`);
-  }
+  };
 
   const [formData, setFormData] = useState({
     userEmail: "",
     userPassword: "",
   });
+
+  const closeRegister = () => {
+    const currentParams = new URLSearchParams(location.search);
+    currentParams.delete('register');
+    navigate(`${location.pathname}?${currentParams.toString()}`);
+  }
 
   const handleClick = (e) => {
     const { name, value } = e.target;
@@ -34,16 +40,12 @@ const UserRegister = () => {
 
   const register = async () => {
     try {
-      const res = await axios.post(
-        "/api/user/register",
-        formData,
-        {
-          headers: {
-            "Content-Type": "Application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const res = await axios.post("/api/user/register", formData, {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+        withCredentials: true,
+      });
       if (res.data.success) {
         alert(res.data.message);
         navigate("/login");
@@ -56,21 +58,25 @@ const UserRegister = () => {
   };
 
   return (
-    <div className="userRegister h-[400px] w-[400px]  flex justify-center items-center bg-blue-400 rounded-xl">
+    <div className="userRegister h-full w-full  flex justify-center items-center bg-blue-400 rounded-xl">
       <div className="RegisterContainer h-full w-full justify-center items-center flex overflow-hidden relative">
-        {/* {animated Bubble} */}
-        {/* <Bubble /> */}
-        {/* 🟦 Register Form */}
-        <div className="Register-logic-container z-10 flex items-center justify-center bg-white shadow-xl rounded-xl border h-[400px] w-[400px]">
+        <div className="Register-logic-container z-10 flex items-center justify-center bg-white shadow-xl rounded-xl border h-full w-full relative">
+          <div
+            className="absolute top-3 right-3 cursor-pointer text-red-700"
+            onClick={closeRegister}
+          >
+            <span class="material-symbols-outlined">close</span>
+          </div>
           <form
             action="Post"
             onSubmit={(e) => formSubmit(e)}
-            className="h-full w-full flex flex-col p-5 gap-5 justify-around "
+            className="h-full w-full flex flex-col p-5 gap-5 justify-center"
           >
-            <h1 className="w-full flex font-bold text-[16px] md:text-[40px]">
+            <h1 className="w-full flex font-bold text-[24px] md:text-[40px] text-gray-700">
               Sign-In
             </h1>
             <div className="gap-3 flex flex-col">
+
               <div className="w-full border flex gap-3 p-4 rounded-3xl">
                 {/* <span>Email</span> */}
                 <input
@@ -95,6 +101,7 @@ const UserRegister = () => {
                   value={formData.userPassword}
                 />
               </div>
+
             </div>
             <div className="">
               <button
@@ -108,7 +115,7 @@ const UserRegister = () => {
                 onClick={alreadyUser}
               >
                 Already User
-                </div>           
+              </div>
             </div>
           </form>
         </div>

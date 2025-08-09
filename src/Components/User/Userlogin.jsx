@@ -31,24 +31,31 @@ const UserLogin = () => {
   };
 
   const fetchLogin = async () => {
-    try {
-      const res = await axios.post("/api/user/login", formData, {
-        headers: {
-          "Content-Type": "Application/json",
-        },
-        withCredentials: true,
-      });
 
-      if (res.data.message) {
-        setUserToken(res.data.userToken);
-        localStorage.setItem("token", res.data.userToken);
-        alert(res.data.message);
-        navigate("/");
-      } else {
-        alert(res.data.message);
+    try {
+      if (!formData.userEmail || !formData.userPassword) return;
+      //tostifier
+      else {
+        const res = await axios.post("/api/user/login", formData, {
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          withCredentials: true,
+        });
+
+        if (res.data.message) {
+          setUserToken(res.data.userToken);
+          localStorage.setItem("token", res.data.userToken);
+          alert(res.data.message);
+          navigate("/");
+        } else {
+          alert(res.data.message);
+          //toastifier
+        }
       }
     } catch (error) {
-      alert(error.message);
+      console.error("Login Error " ,error.message);
+      //toastifier
     }
   };
 
@@ -62,15 +69,18 @@ const UserLogin = () => {
       {/* <Bubble/> */}
 
       <div className=" z-10 flex items-center justify-center bg-white shadow-xl rounded-xl border h-full w-full flex-col relative">
-        <div className="absolute top-3 right-3 cursor-pointer text-red-700" onClick={closelogin}>
+        <div
+          className="absolute top-3 right-3 cursor-pointer text-red-700"
+          onClick={closelogin}
+        >
           <span class="material-symbols-outlined">close</span>
         </div>
         <form
           action="post"
-          className="flex flex-col justify-around h-full w-full p-4"
+          className="flex flex-col justify-center h-full w-full p-7 gap-3"
           onSubmit={(e) => onLogin(e)}
         >
-          <h2 className="font-bold text-gray-700 text-[16px] font-bold md:text-[40px]">
+          <h2 className="font-bold text-gray-700 text-[24px] font-bold md:text-[40px]">
             Login
           </h2>
           <div className="flex flex-col gap-3">
@@ -98,7 +108,7 @@ const UserLogin = () => {
           <div className="">
             <button
               type="submit"
-              className="border-2 w-full p-3 rounded-2xl  text-[20px] md:text-xl font-bold bg-blue-300 hover:bg-blue-400"
+              className="border-2 w-full p-3 rounded-2xl  text-[24px] md:text-xl font-bold bg-blue-300 hover:bg-blue-400"
             >
               Login
             </button>

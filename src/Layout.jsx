@@ -8,6 +8,7 @@ import AddProduct from "./Components/Admin/AddProduct";
 import UserRegister from "./Components/User/UserRegister";
 import Home from "./Home";
 import OrderConfirmation from "./Pages/OrderConfirmation";
+import Navbar from "./Pages/header";
 const Error = lazy(() => import("./Pages/Error"));
 const ViewProduct = lazy(() => import("./Pages/ViewProduct"));
 const Nav = lazy(() => import("./Pages/Nav"));
@@ -21,7 +22,7 @@ const Layout = () => {
   const shouldHideNav = hideNavRoute.includes(location.pathname) || location.pathname.startsWith('/admin');
   return (
     <>
-      {!shouldHideNav && <Nav />}
+      {!shouldHideNav && <Nav/>}
       
       <Suspense fallback="loading...">
         <Routes>
@@ -34,7 +35,7 @@ const Layout = () => {
           <Route path="/register" element={<UserRegister/>} />
           <Route path="/shipping" element={<Address/>}/>
           <Route path="/confirmation" element={<OrderConfirmation/>}/>
-          <Route path="*" element={<Error />} />
+          {/* <Route path="*" element={<Error />} /> */}
         </Routes>
       </Suspense>
     </>
