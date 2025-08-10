@@ -30,8 +30,11 @@ const Nav = () => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
 
-      if (scrollTop <= 50) {
+      if (scrollTop <= 50 || windowWidth >= 430) {
+        
         setShrink(false);
+        console.log(scrollTop,shrink);
+
       } else {
         setShrink(true);
       }
@@ -44,7 +47,7 @@ const Nav = () => {
     <>
       <nav
         className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300 ease-in ${
-          shrink ? "translate-y-[-30px]" : "translate-y-0"
+          shrink ? "translate-y-[30px]" : "translate-y-0"
         }`}
       >
         <div
@@ -77,14 +80,14 @@ const Nav = () => {
               </div>
             </div>
           </div>
-          {windowWidth > 400 && (
+          {windowWidth > 430 && (
            <Footer/>
           )}
         </div>
       </nav>
-      {windowWidth < 400 && (
+      {/* {windowWidth <= 430 && (
           <Footer/>
-      )}
+      )} */}
     </>
   );
 };

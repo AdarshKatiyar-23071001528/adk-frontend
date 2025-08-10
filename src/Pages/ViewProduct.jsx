@@ -68,16 +68,16 @@ const ViewProduct = () => {
 
   return (
     <>
-  <div className="flex flex-col md:flex-row min-h-screen gap-10 pt-[140px] p-6 md:p-[140px] bg-gray-50">
+  <div className="flex flex-col md:flex-row min-h-screen gap-10 pt-[100px]  pb-[100px] md:pt-[140px]  w-full">
     {/* LEFT SIDE - IMAGE + PRICE */}
-    <div className="left-viewItem-container md:sticky top-[140px] md:w-1/2 flex flex-col gap-6 items-center  p-6 rounded-xl shadow-md">
+    <div className="left-viewItem-container md:sticky top-[140px]  md:w-1/2 flex flex-col gap-6 items-center md:rounded-xl shadow-md w-full">
       <img
         src={specificProduct.productImg}
         alt="product"
-        className="h-[350px] md:h-[400px] rounded-2xl border-2 border-gray-200 object-cover"
+        className="h-[320px] md:h-[400px]  w-full md:rounded-2xl object-contains"
       />
 
-      <div className="w-full flex justify-between items-center border-t pt-5">
+      <div className="w-full flex justify-around items-center border-t pt-5 p-3">
         <p className="text-2xl font-bold text-gray-800">
           ₹ {specificProduct.productPrice}
         </p>
@@ -88,7 +88,7 @@ const ViewProduct = () => {
     </div>
 
     {/* RIGHT SIDE - DETAILS */}
-    <div className="flex flex-col gap-4 md:w-1/2 bg-white p-6 rounded-xl shadow-md">
+    <div className="flex flex-col gap-4 md:w-1/2 bg-white  p-6 rounded-xl shadow-md ">
       <h2 className="text-xl font-bold text-gray-700 mb-2 border-b pb-2">
         Product Details
       </h2>

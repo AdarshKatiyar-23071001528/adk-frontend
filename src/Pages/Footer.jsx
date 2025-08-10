@@ -71,9 +71,11 @@ const Footer = () => {
   };
 
   return (
-    <footer>
+    <footer className="fixed bottom-0 left-0 z-50 w-full bg-white md:relative md:w-[150px]">
+      {/* tumhara baaki ka footer ka code yaha rahega */}
+
       <div
-        className="thirdPart md:w-[150px] w-full fixed bottom-0 md:relative z-50"
+        className="thirdPart md:w-[150px] w-full md:relative "
         ref={dropdownRef}
       >
         <div className="otherContainer md:w-[150px] w-full">
