@@ -243,7 +243,7 @@ const Cart = () => {
   return (
     <>
       {!userToken ? (
-        <div className="relative w-full h-screen bg-black-10 flex items-center justify-center flex-col pb-[60px] pr-4 pb-4 pl-4 gap-6 relative md:p-10">
+        <div className="relative w-full h-screen bg-black-10 flex items-center justify-center flex-col p-10 gap-6 relative ">
           <div
             className="flex items-center absolute top-4 left-5 "
             onClick={closeCart}
@@ -342,10 +342,10 @@ const Cart = () => {
                 )}
               </div>
 
-              <div>Order Summary</div>
+              {/* <div>Order Summary</div> */}
 
               {/* buttons */}
-              <div className="gap-2 flex flex-col">
+              <div className="gap-2 flex flex-col pb-12">
                 <button
                   style={{ backgroundColor: "yellow" }}
                   className="hover:bg-blue-600 border-2 w-full font-bold rounded py-2"
@@ -365,6 +365,7 @@ const Cart = () => {
                   </p>
                 </button>
               </div>
+
             </div>
           </div>
         </>
