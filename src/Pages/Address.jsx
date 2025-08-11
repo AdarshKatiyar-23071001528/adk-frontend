@@ -83,8 +83,8 @@ const Address = () => {
   };
 
   return (
-    <div className="flex  h-[400px] w-[400px] bg-gray-100 rounded-xl">
-      <div className="w-[400px] h-[400px] border rounded-xl shadow-md p-4 flex flex-col justify-between gap-4 bg-white">
+    <div className="flex  h-full w-full bg-gray-100 rounded-xl">
+      <div className="w-full h-full border rounded-xl shadow-md p-4 flex flex-col justify-between gap-4 bg-white">
         {/* Buttons */}
         <div className="flex flex-col gap-4">
           <button

@@ -94,8 +94,8 @@ const ShowProduct = () => {
             className="product border border-gray-200 md:w-1/5"
             onClick={() => setViewId(item._id)}
           >
-            <div className="productImg">
-              <img src={item.productImg} alt={item.productTitle} />
+            <div className="productImg rounded-xl">
+              <img src={item.productImg} alt={item.productTitle} className="rounded-xl" />
               <button
                 type="submit"
                 className="add-item-btn"

@@ -65,10 +65,10 @@ const UserLogin = () => {
     navigate(`${location.pathname}?${urlParams.toString()}`);
   };
   return (
-    <div className="h-full w-full flex justify-center items-center bg-blue-400 rounded-xl">
+    <div className="h-full w-full flex justify-center items-center bg-blue-400 md:rounded-xl">
       {/* <Bubble/> */}
 
-      <div className=" z-10 flex items-center justify-center bg-white shadow-xl rounded-xl border h-full w-full flex-col relative">
+      <div className=" z-10 flex items-center justify-center bg-white shadow-xl md:rounded-xl border h-full w-full flex-col relative">
         <div
           className="absolute top-3 right-3 cursor-pointer text-red-700"
           onClick={closelogin}

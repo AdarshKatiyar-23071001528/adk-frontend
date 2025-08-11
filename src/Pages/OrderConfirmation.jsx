@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../Components/axios";
 import React, { useEffect, useState } from "react";
 
@@ -5,6 +6,16 @@ const OrderConfirmation = () => {
   const token = localStorage.getItem("token");
   const [orders, setOrders] = useState([]);
   const [order_DId, setOrder_DId] = useState("");
+
+
+  // close confirmation
+  const navigate = useNavigate();
+  const location = useLocation();
+  const closeConfirmation = () =>{
+    const currentUrl = new URLSearchParams(location.search);
+    currentUrl.delete('orderconfirm');
+    navigate(`${location.pathname}?${currentUrl.toString()}`);
+  }
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
@@ -38,29 +49,46 @@ const OrderConfirmation = () => {
 
   return (
     <>
-      <div className="flex h-full w-full justify-center items-center">
-        <div className="flex flex-col h-full w-full shadow-xl border-2 rounded-xl p-10 gap-6 justify-between">
+      <div className="flex h-full w-full justify-center items-center relative">
+        <div className="flex flex-col h-full w-full shadow-xl border-2 md:rounded-xl p-5 gap-2 justify-between">
+
+          <div className="absolute right-4 top-3 text-red-600 h-[20px] w-[20px] rounded-full bg-gray-300 hover:bg-gray-400 items-center justify-center flex p-3 font-bold" onClick={closeConfirmation}>
+            X
+          </div>
+          {/* heading */}
           <div className="flex flex-col gap-2">
-            <h1 className="font-bold text-2xl text-blue-400">
+            <h1 className="font-bold text-[13px] md:text-[20px] md:text-2xl text-blue-400">
               Order Confirmed
             </h1>
           </div>
 
-          {/* items */}
-          <div className="gap-3">
-            <div className="flex flex-col gap-3">
-              <div className="flex gap-3 justify-between">
-                <div className="flex gap-3 font-bold">
+          {/* items container */}
+          <div>
+            <div className="flex flex-col gap-2">
+              
+              
+              {/*status + id  */}
+              <div className="flex justify-between">
+
+                <div className="flex gap-3 font-bold text-[11px] md:text-[13px]">
                   <span>Status: </span>
                   <p className="text-green-400">{orders.payStatus}</p>
                 </div>
-                <div>
+
+
+                <div className="text-[11px] md:text-[13px]">
                   <p>{order_DId}</p>
                 </div>
+
+
               </div>
-              {orders?.orderItems?.map((item, index) => (
-                <div key={index} className="text-gray-500 font-bold">
-                  <table border={2} className="w-full table-fixed">
+
+
+               {/* product  */}
+              <div className="h-[150px] overflow-y-auto">
+                 {orders?.orderItems?.map((item, index) => (
+                <div key={index} className="text-gray-500 font-bold  text-[10px]">
+                  <table border={2} className="w-full table-fixed text-[13px]">
                     <tbody>
                       <tr className="text-center w-full p-10 ">
                         <td className="w-[5%]">
@@ -69,7 +97,7 @@ const OrderConfirmation = () => {
                             className="w-full object-cover"
                           />
                         </td>
-                        <td className="w-[15%]">{item.productTitle}</td>
+                        <td className="w-[15%] truncate">{item.productTitle}</td>
                         <td className="w-[15%]">₹{item.productPrice}</td>
                         <td className="w-[15%]">{item.productQty}</td>
                       </tr>
@@ -77,14 +105,16 @@ const OrderConfirmation = () => {
                   </table>
                 </div>
               ))}
+              </div>
+             
             </div>
           </div>
 
           {/* address */}
           <div>
-            <p className="font-bold">Delivery Address</p>
+            <p className="font-bold text-[13px]">Delivery Address</p>
             {orders?.userShipping?.map((address, index) => (
-              <div key={index}>
+              <div key={index} className="text-[12px]">
                 <p>{address.userAddress}</p>
                 <p>{address.userFullName}</p>
                 <p>{address.userPincode}</p>
@@ -92,6 +122,7 @@ const OrderConfirmation = () => {
               </div>
             ))}
           </div>
+
         </div>
       </div>
       {}

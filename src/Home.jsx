@@ -90,7 +90,7 @@ const Home = () => {
             onClick={closeAddress}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="p-6 rounded shadow-lg w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="p-6 rounded shadow-lg md:w-[400px] w-full h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <Address />
             </div>
           </div>
@@ -104,7 +104,7 @@ const Home = () => {
             onClick={closeConfirmation}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="bg-white border rounded shadow-xl w-full md:w-[400px] h-[600px] md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="bg-white border rounded shadow-xl w-full md:w-[400px] h-full md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <OrderConfirmation />
             </div>
           </div>
