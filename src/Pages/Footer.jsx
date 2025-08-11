@@ -71,7 +71,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 z-50 w-full bg-white md:relative md:w-[150px]">
+    <footer className="fixed bottom-0 left-0 z-50 w-full md:relative md:w-[150px]">
       {/* tumhara baaki ka footer ka code yaha rahega */}
 
       <div

@@ -33,7 +33,7 @@ const Nav = () => {
       if (scrollTop <= 50 || windowWidth >= 430) {
         
         setShrink(false);
-        console.log(scrollTop,shrink);
+
 
       } else {
         setShrink(true);
@@ -46,8 +46,8 @@ const Nav = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300 ease-in ${
-          shrink ? "translate-y-[30px]" : "translate-y-0"
+        className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300 ease-in bg-linear ${
+          shrink ? "translate-y-[-30px]" : "translate-y-0"
         }`}
       >
         <div

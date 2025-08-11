@@ -6,16 +6,16 @@
   grid-template-columns: repeat(6,1fr);
   flex-wrap: wrap;
   /* gap: 10px; */
-  padding: var(--nav-height) 10px 10px 10px;
+  padding: 100px 10px 10px 10px;
   overflow: hidden;
 
   @media (max-width: 640px) {
     justify-content: center;
-    padding: 140px 10px 100px 10px;
+    padding: 100px 10px 100px 10px;
   }
   @media (max-width: 430px) {
     justify-content: space-around;
-    padding: 140px 10px 100px 10px;
+    padding: 100px 10px 100px 10px;
     grid-template-columns: repeat(3,1fr);
 
   }

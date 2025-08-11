@@ -34,5 +34,18 @@
     "postcss-nesting": "^13.0.2",
     "tailwindcss": "^3.3.5",
     "vite": "^7.0.4"
-  }
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdarshKatiyar-23071001528/adk-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AdarshKatiyar-23071001528/adk-frontend/issues"
+  },
+  "homepage": "https://github.com/AdarshKatiyar-23071001528/adk-frontend#readme"
 }

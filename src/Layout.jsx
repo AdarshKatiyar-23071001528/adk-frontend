@@ -38,7 +38,7 @@ const Layout = () => {
       {!shouldHideNav && <Nav />}
 
       {/* Main content with bottom padding for footer space */}
-      <main className={`flex-1 mt-[60px] mb-[60px] `}>
+      <main>
         <Suspense fallback="loading...">
           <Routes>
             <Route path="/" element={<Home />} />

@@ -74,7 +74,7 @@ const ViewProduct = () => {
       <img
         src={specificProduct.productImg}
         alt="product"
-        className="h-[320px] md:h-[400px]  w-full md:rounded-2xl object-contains"
+        className="h-[320px] md:h-[400px]  w-full md:w-fit md:rounded-2xl object-contains"
       />
 
       <div className="w-full flex justify-around items-center border-t pt-5 p-3">
