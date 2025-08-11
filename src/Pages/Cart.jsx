@@ -243,7 +243,7 @@ const Cart = () => {
   return (
     <>
       {!userToken ? (
-        <div className="relative w-full h-screen bg-black-10 flex items-center justify-center  flex-col p-10 gap-6 relative">
+        <div className="relative w-full h-screen bg-black-10 flex items-center justify-center flex-col pb-[60px] pr-4 pb-4 pl-4 gap-6 relative md:p-10">
           <div
             className="flex items-center absolute top-4 left-5 "
             onClick={closeCart}
