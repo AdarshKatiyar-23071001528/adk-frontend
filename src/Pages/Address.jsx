@@ -8,21 +8,19 @@ const Address = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpenNewAddress, setIsOpenNewAddress] = useState(false);
-  const [isCurrenLocation,setIsCurrentLocation] = useState(false);
+  const [isCurrenLocation, setIsCurrentLocation] = useState(false);
   const { userToken } = useContext(AppContext);
 
-
   // for close address window from any where
-  const closeAddress  =() =>{
+  const closeAddress = () => {
     const currentParams = new URLSearchParams(location.search);
     currentParams.delete("shipping");
     navigate(`${location.pathname}?${currentParams.toString()}`);
     // forcely refresh for changes in cart address
     window.location.reload();
-  }
+  };
 
   // for current locaion
- 
 
   const [addressData, setAddressData] = useState({
     userFullName: "",
@@ -59,23 +57,18 @@ const Address = () => {
 
   const addAddress = async () => {
     try {
-      const res = await axios.post(
-        "/api/address/add",
-        addressData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            userToken,
-          },
-          withCredentials: true,
-        }
-      );
+      const res = await axios.post("/api/address/add", addressData, {
+        headers: {
+          "Content-Type": "application/json",
+          userToken,
+        },
+        withCredentials: true,
+      });
       const latestIndex = res?.data?.address?.fullAddress?.length - 1;
       localStorage.setItem(
         "latestAdd",
         res.data.address.fullAddress[latestIndex]._id
       );
-
     } catch (error) {
       console.error(error.message);
     }
@@ -83,13 +76,22 @@ const Address = () => {
   };
 
   return (
-    <div className="flex  h-full w-full bg-gray-100 rounded-xl">
-      <div className="w-full h-full border rounded-xl shadow-md p-4 flex flex-col justify-between gap-4 bg-white">
+    <div className="flex  h-full w-full bg-linear rounded-xl relative">
+       <div
+          className="absolute top-3 right-3 cursor-pointer text-red-700"
+          onClick={closeAddress}
+        >
+          <span class="material-symbols-outlined">close</span>
+        </div>
+      <div className="w-full h-full rounded-xl shadow-md p-4 flex flex-col justify-between gap-4">
         {/* Buttons */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 pt-7">
           <button
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
-            onClick={() => {alert("Fetching current location..."); setIsCurrentLocation(true)}}
+            onClick={() => {
+              alert("Fetching current location...");
+              setIsCurrentLocation(true);
+            }}
           >
             Use Current Location
           </button>
@@ -166,12 +168,7 @@ const Address = () => {
                 className="p-2 border rounded-md"
               />
               <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  required
-                  className="mr-2"
-                  id="agree"
-                />
+                <input type="checkbox" required className="mr-2" id="agree" />
                 <label htmlFor="agree" className="text-sm">
                   I agree to the{" "}
                   <a href="#" className="text-blue-600 underline">
@@ -189,10 +186,7 @@ const Address = () => {
           </form>
         )}
 
-        {
-          isCurrenLocation && (<Geolocation/>)
-        }
-
+        {isCurrenLocation && <Geolocation />}
       </div>
     </div>
   );

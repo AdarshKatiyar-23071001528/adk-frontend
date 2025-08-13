@@ -47,17 +47,19 @@ const OrderConfirmation = () => {
     setOrder_DId(cleanId);
   }, [orders]);
 
-  return (
+  return ( 
     <>
-      <div className="flex h-full w-full justify-center items-center relative">
-        <div className="flex flex-col h-full w-full shadow-xl border-2 md:rounded-xl p-5 gap-2 justify-between">
+      <div className="flex h-full w-full justify-center items-center relative bg-linear rounded-xl">
+        <div className="flex flex-col h-full w-full shadow-xl md:rounded-xl p-5 gap-2 justify-around">
 
-          <div className="absolute right-4 top-3 text-red-600 h-[20px] w-[20px] rounded-full bg-gray-300 hover:bg-gray-400 items-center justify-center flex p-3 font-bold" onClick={closeConfirmation}>
+          <div className="absolute right-4 top-3 text-red-600 h-[20px] w-[20px] rounded-full bg-gray-300 hover:bg-gray-400 items-center justify-center flex p-3 font-bold cursor-pointer" onClick={closeConfirmation}>
             X
           </div>
+
+
           {/* heading */}
           <div className="flex flex-col gap-2">
-            <h1 className="font-bold text-[13px] md:text-[20px] md:text-2xl text-blue-400">
+            <h1 className="font-bold text-[13px] md:text-[20px] md:text-2xl ">
               Order Confirmed
             </h1>
           </div>

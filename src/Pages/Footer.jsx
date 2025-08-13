@@ -22,6 +22,7 @@ const Footer = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLogin(false);
+    setIsOption(false);
   };
 
   const openCart = () => {
@@ -68,6 +69,7 @@ const Footer = () => {
     } else {
       navigate("/admin-first-secured/login");
     }
+    setIsOption(false);
   };
 
   return (
@@ -75,11 +77,11 @@ const Footer = () => {
       {/* tumhara baaki ka footer ka code yaha rahega */}
 
       <div
-        className="thirdPart md:w-[150px] w-full md:relative "
+        className="thirdPart md:w-[150px] w-full md:relative"
         ref={dropdownRef}
       >
         <div className="otherContainer md:w-[150px] w-full">
-          <div className="menuContainer bg-blue-200  flex md:w-[150px]  w-full p-4 justify-between items-center md:bg-transparent ">
+          <div className="menuContainer bg-blue-200  flex md:w-[150px]  w-full p-4 justify-between items-center md:bg-transparent h-full">
             <div
               className="cartContainer relative cursor-pointer"
               onClick={openCart}
@@ -116,19 +118,23 @@ const Footer = () => {
               <span class="material-symbols-outlined">menu</span>
             </div>
 
+            {/* options */}
             {isOptionOpen && (
-              <div className="absolute top-[-90px] left-[0px] md:top-[45px] cursor-pointer bg-blue-300 text-center w-full md:w-[100px] md:rounded-xl">
-                <div
-                  className="hover:bg-blue-400 p-2 w-full md:w-[100px] rounded-tl-xl rounded-tr-xl"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </div>
-                <div
-                  className="hover:bg-blue-400 p-2 w-full md:w-[100px] rounded-bl-xl rounded-br-xl"
-                  onClick={handleAdmin}
-                >
-                  Admin
+              <div className="md:h-[200px] h-fit absolute top-[-80px] md:top-12 right-0 w-[50%] md:w-full ">
+                <div className=" cursor-pointer bg-blue-300 text-center w-full h-full">
+                  <div
+                    className="hover:bg-blue-400 p-2 w-full  "
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </div>
+
+                  <div
+                    className="hover:bg-blue-400 p-2 w-full "
+                    onClick={handleAdmin}
+                  >
+                    Admin
+                  </div>
                 </div>
               </div>
             )}

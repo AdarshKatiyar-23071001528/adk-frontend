@@ -65,10 +65,10 @@ const UserLogin = () => {
     navigate(`${location.pathname}?${urlParams.toString()}`);
   };
   return (
-    <div className="h-full w-full flex justify-center items-center bg-blue-400 md:rounded-xl">
+    <div className="h-full w-full flex justify-center items-center  md:rounded-xl bg-linear">
       {/* <Bubble/> */}
 
-      <div className=" z-10 flex items-center justify-center bg-white shadow-xl md:rounded-xl border h-full w-full flex-col relative">
+      <div className=" z-10 flex items-center justify-center  shadow-xl md:rounded-xl  h-full w-full flex-col relative p-4 md:p-0">
         <div
           className="absolute top-3 right-3 cursor-pointer text-red-700"
           onClick={closelogin}
@@ -121,7 +121,7 @@ const UserLogin = () => {
           </div>
         </form>
       </div>
-    </div>
+    </div> 
   );
 };
 

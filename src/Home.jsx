@@ -76,7 +76,7 @@ const Home = () => {
             onClick={closeLogin}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className=" bg-black rounded shadow-lg w-full h-full md:w-[400px] md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="  rounded shadow-lg w-full md:w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <UserLogin />
             </div>
           </div>
@@ -104,7 +104,7 @@ const Home = () => {
             onClick={closeConfirmation}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="bg-white border rounded shadow-xl w-full md:w-[400px] h-full md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className=" rounded shadow-xl w-full md:w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <OrderConfirmation />
             </div>
           </div>
@@ -118,7 +118,7 @@ const Home = () => {
             onClick={closeRegister}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="rounded shadow-lg w-full h-full md:w-[400px] md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="rounded shadow-lg w-full md:w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <UserRegister />
             </div>
           </div>
