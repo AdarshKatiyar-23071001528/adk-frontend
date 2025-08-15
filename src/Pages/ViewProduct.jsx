@@ -1,13 +1,17 @@
 import axios from "../Components/axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Error from "./Error";
 import Loading from "./Loading";
 import UserLogin from "../Components/User/Userlogin";
 import Cart from "./Cart";
 import UserRegister from "../Components/User/UserRegister";
+import AppContext from "../Context/AppContext";
 
 const ViewProduct = () => {
+  //from context api
+  const { setCartLength } = useContext(AppContext);
+
   let { id } = useParams();
   const [specificProduct, setSpecificProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -26,7 +30,7 @@ const ViewProduct = () => {
     fetchParams.delete("cart");
     navigate(`${location.pathname}?${fetchParams.toString()}`);
   };
-    const closeRegister = () => {
+  const closeRegister = () => {
     fetchParams.delete("register");
     navigate(`${location.pathname}?${fetchParams.toString()}`);
   };
@@ -41,13 +45,46 @@ const ViewProduct = () => {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
+  //add cart
+  const addCart = async (product) => {
+    const userToken = localStorage.getItem("token");
+    if (!userToken) return alert("Login first");
+    const { _id, productPrice, productImg, productTitle } = product;
+    try {
+      const res = await axios.post(
+        "/api/cart/add",
+        {
+          productId: _id,
+          productPrice,
+          productTitle,
+          productImg,
+          productQty: 1,
+        },
+        {
+          headers: {
+            "Content-Type": "Application/json",
+            userToken: userToken,
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.message !== "Updated Item") {
+        setCartLength(res.data.cart.items.length);
+        window.location.reload();
+      } else {
+        alert(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // find product
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(
-          `/api/product/specificProduct/${id}`
-        );
+        const res = await axios.get(`/api/product/specificProduct/${id}`);
 
         if (res.data.success && res.data.product) {
           setSpecificProduct(res.data.product);
@@ -68,58 +105,59 @@ const ViewProduct = () => {
 
   return (
     <>
-  <div className="flex flex-col md:flex-row min-h-screen gap-10 pt-[100px]  pb-[100px] md:pt-[140px]  w-full">
-    {/* LEFT SIDE - IMAGE + PRICE */}
-    <div className="left-viewItem-container md:sticky top-[140px]  md:w-1/2 flex flex-col gap-6 items-center md:rounded-xl shadow-md w-full">
-      <img
-        src={specificProduct.productImg}
-        alt="product"
-        className="h-[320px] md:h-[400px]  w-full md:w-fit md:rounded-2xl object-contains"
-      />
+      <div className="flex flex-col md:flex-row min-h-screen gap-10 pt-[150px]  pb-[100px] md:pt-[170px]  w-full">
+        {/* LEFT SIDE - IMAGE + PRICE */}
+        <div className="left-viewItem-container md:sticky top-[140px]  md:w-1/2 flex flex-col gap-6 items-center md:rounded-xl shadow-md w-full">
+          <img
+            src={specificProduct.productImg}
+            alt="product"
+            className="h-[320px] md:h-[400px]  w-full md:w-fit md:rounded-2xl object-contains"
+          />
 
-      <div className="w-full flex justify-around items-center border-t pt-5 p-3">
-        <p className="text-2xl font-bold text-gray-800">
-          ₹ {specificProduct.productPrice}
-        </p>
-        <button className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-xl font-semibold transition duration-300">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-
-    {/* RIGHT SIDE - DETAILS */}
-    <div className="flex flex-col gap-4 md:w-1/2 bg-white  p-6 rounded-xl shadow-md ">
-      <h2 className="text-xl font-bold text-gray-700 mb-2 border-b pb-2">
-        Product Details
-      </h2>
-
-      {Object.entries(specificProduct).map(([key, value], index) => {
-        if (["__v", "_id", "productImg", "createdAt"].includes(key)) return null;
-
-        const formattedKey = key
-          .replace(/([A-Z])/g, " $1")
-          .replace(/^./, (char) => char.toUpperCase());
-
-        return (
-          <div key={index} className="flex flex-col text-gray-800">
-            <span className="font-semibold">{formattedKey}:</span>
-            <span className="pl-2">
-              {typeof value === "string" && value.length > 100
-                ? value.split(/[.]/).map((line, i) => (
-                    <li key={i} className="ml-5 list-disc text-sm">
-                      {line.trim()}
-                    </li>
-                  ))
-                :  value}
-            </span>
+          <div className="w-full flex justify-around items-center border-t pt-5 p-3">
+            <p className="text-2xl font-bold text-gray-800">
+              ₹ {specificProduct.productPrice}
+            </p>
+            <button
+              className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-xl font-semibold transition duration-300"
+              onClick={() => addCart(specificProduct)}
+            >
+              Add to Cart
+            </button>
           </div>
-        );
-      })}
-    </div>
-  </div>
+        </div>
 
+        {/* RIGHT SIDE - DETAILS */}
+        <div className="flex flex-col gap-4 md:w-1/2 bg-white  p-6 rounded-xl shadow-md ">
+          <h2 className="text-xl font-bold text-gray-700 mb-2 border-b pb-2">
+            Product Details
+          </h2>
 
-   
+          {Object.entries(specificProduct).map(([key, value], index) => {
+            if (["__v", "_id", "productImg", "createdAt"].includes(key))
+              return null;
+
+            const formattedKey = key
+              .replace(/([A-Z])/g, " $1")
+              .replace(/^./, (char) => char.toUpperCase());
+
+            return (
+              <div key={index} className="flex flex-col text-gray-800">
+                <span className="font-semibold">{formattedKey}:</span>
+                <span className="pl-2">
+                  {typeof value === "string" && value.length > 100
+                    ? value.split(/[.]/).map((line, i) => (
+                        <li key={i} className="ml-5 list-disc text-sm">
+                          {line.trim()}
+                        </li>
+                      ))
+                    : value}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
 
       {isLoginOpen && (
         <>
@@ -128,13 +166,13 @@ const ViewProduct = () => {
             onClick={closeLogin}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="rounded shadow-lg w-full h-full md:w-[400px] md:Lh-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="rounded shadow-lg w-full h-full md:w-[400px] md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <UserLogin />
             </div>
           </div>
         </>
       )}
-       {isRegisterOpen && (
+      {isRegisterOpen && (
         <>
           <div
             className="fixed inset-0 bg-black bg-opacity-40  z-40"
@@ -164,9 +202,7 @@ const ViewProduct = () => {
           </div>
         </>
       )}
-      
-      
-      </>
+    </>
   );
 };
 

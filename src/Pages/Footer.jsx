@@ -72,6 +72,13 @@ const Footer = () => {
     setIsOption(false);
   };
 
+  //handle Order Summary
+  const handleOrderSummary = () =>{
+    const currentUrl = new URLSearchParams(location.search);
+    currentUrl.set('summary','open');
+    navigate(`${location.pathname}?${currentUrl.toString()}`);
+  }
+
   return (
     <footer className="fixed bottom-0 left-0 z-50 w-full md:relative md:w-[150px]">
       {/* tumhara baaki ka footer ka code yaha rahega */}
@@ -134,6 +141,12 @@ const Footer = () => {
                     onClick={handleAdmin}
                   >
                     Admin
+                  </div>
+
+
+                  <div className="hover:bg-blue-400 p-2 w-full"
+                   onClick={handleOrderSummary}>
+                    OrderSummary
                   </div>
                 </div>
               </div>

@@ -1,3 +1,11 @@
 .bg-linear{
     background: linear-gradient(#3587db , white , white, white);
 }
+.scrollbar-hide{
+    -ms-overflow-style: none; /*ie and edge*/
+    scrollbar-width: none;
+    
+    &::-webkit-scrollbar{
+        display: none;
+    }
+}  

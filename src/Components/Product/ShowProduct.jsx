@@ -49,7 +49,7 @@ const ShowProduct = () => {
       const res = await axios.post(
         "/api/cart/add",
         {
-          productId: _id,
+          productId: _id, 
           productQty: 1,
           productPrice,
           productTitle,
@@ -84,7 +84,7 @@ const ShowProduct = () => {
     
 
   return (
-    <div className="productContainer">
+    <div className="productContainer ">
       {allProduct.map((item) => (
         <Link
           key={item._id}

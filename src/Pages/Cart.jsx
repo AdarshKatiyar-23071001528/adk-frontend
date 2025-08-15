@@ -243,9 +243,9 @@ const Cart = () => {
   return (
     <>
       {!userToken ? (
-        <div className="relative w-full h-screen bg-black-10 flex items-center justify-center flex-col p-10 gap-6 relative ">
+        <div className="relative w-full h-screen bg-black-10 flex items-center justify-center flex-col p-10 gap-6 relative overflow-hidden">
           <div
-            className="flex items-center absolute top-4 left-5 "
+            className="flex items-center absolute top-4  w-full  pl-5"
             onClick={closeCart}
           >
             <span className="material-symbols-outlined">arrow_back_ios</span>
@@ -262,9 +262,11 @@ const Cart = () => {
         </div>
       ) : (
         <>
-          <div className="table-container min-h-screen w-full flex">
-            <div className="h-full bg-blue-300 w-full  flex flex-col p-5 h-screen justify-between overflow-auto fixed top-0 right-0 bottom-0">
+          <div className=" h-full w-full flex">
+            <div className="h-full bg-blue-300 w-full  flex flex-col p-5  justify-between  fixed top-0 left-0 ">
               {/* cart content and arrow */}
+
+
               <div className="flex items-center" onClick={closeCart}>
                 <span className="material-symbols-outlined">
                   arrow_back_ios
@@ -276,52 +278,62 @@ const Cart = () => {
               <div>
                 <h1 className="font-bold text-xl">Your items</h1>
 
-                
+                <div className="overflow-x-auto max-h-[150px] md:max-h-[200px] overflow-y-auto w-full">
+                  <table className="table-fixed w-full border-collapse text-sm">
+                    <tbody>
+                      {cart?.map((item, index) => (
+                        <tr key={index} className="text-center border-b">
+                          <td className="w-[20%] p-2">
+                            <img
+                              src={item.productImg}
+                              alt="product"
+                              className="w-10 h-10 object-cover rounded mx-auto"
+                            />
+                          </td>
 
-                    <div className="overflow-x-auto max-h-[150px] md:max-h-[200px] overflow-y-auto w-full">
-                      <table className="table-fixed w-full border-collapse text-sm">
-                        <tbody>
-                          {cart?.map((item, index) => (
-                            <tr key={index} className="text-center border-b">
-                              <td className="w-[20%] p-2">
-                                <img
-                                  src={item.productImg}
-                                  alt="product"
-                                  className="w-10 h-10 object-cover rounded mx-auto"
-                                />
-                              </td>
+                          <td className="w-[25%] p-2 truncate">
+                            {item.productTitle}
+                          </td>
 
-                              <td className="w-[25%] p-2 truncate">
-                                {item.productTitle}
-                              </td>
+                          <td className="w-[25%] p-2">
+                            <div className="flex items-center justify-center gap-2">
+                              <button
+                                className="font-bold text-xl text-green-500"
+                                onClick={(e) => addCart(e, item)}
+                              >
+                                +
+                              </button>
+                              <span>{item.productQty}</span>
+                              <button
+                                className="font-bold text-2xl text-red-500"
+                                onClick={() => decrease_qty(item.productId)}
+                              >
+                                -
+                              </button>
+                            </div>
+                          </td>
 
-                              <td className="w-[25%] p-2">
-                                <div className="flex items-center justify-center gap-2">
-                                  <button
-                                    className="font-bold text-xl text-green-500"
-                                    onClick={(e) => addCart(e, item)}
-                                  >
-                                    +
-                                  </button>
-                                  <span>{item.productQty}</span>
-                                  <button
-                                    className="font-bold text-2xl text-red-500"
-                                    onClick={() => decrease_qty(item.productId)}
-                                  >
-                                    -
-                                  </button>
-                                </div>
-                              </td>
-
-                              <td className="w-[25%] p-2">
-                                ₹{item.productPrice}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                  
+                          <td className="w-[25%] p-2">₹{item.productPrice}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
+              </div>
+
+              {/* Clearification of payment  */}
+              <div className="w-full">
+        
+                <h1 className="font-bold text-[13px] md:text-xl">Estimate</h1>
+                <p className="w-full flex justify-between items-center text-gray-500 text-[13px] md:text-[16px]">
+                  <span>Items</span>
+                  <span>{totalQty}</span>
+                  <span>₹{totalPrice}.00</span>
+                </p>
+                <p className="w-full flex justify-between items-center text-gray-500 text-[13px] md:text-[16px]">
+                  <span>Delivery</span>
+                  <span>₹00.00</span>
+                </p>
               </div>
 
               {/* //address */}
@@ -345,7 +357,7 @@ const Cart = () => {
               {/* <div>Order Summary</div> */}
 
               {/* buttons */}
-              <div className="gap-2 flex flex-col pb-12">
+              <div className="gap-2 flex flex-col pd-12 md:pb-0">
                 <button
                   style={{ backgroundColor: "yellow" }}
                   className="hover:bg-blue-600 border-2 w-full font-bold rounded py-2"
@@ -361,10 +373,11 @@ const Cart = () => {
                   {" "}
                   <p>
                     Proceed to Pay{" "}
-                    <span className="text-red-600">{totalPrice}</span>
+                    <span className="text-red-600">₹{totalPrice}</span>
                   </p>
                 </button>
               </div>
+
 
             </div>
           </div>

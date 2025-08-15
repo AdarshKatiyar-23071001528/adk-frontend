@@ -8,6 +8,7 @@ import UserLogin from "./Components/User/Userlogin";
 import UserRegister from "./Components/User/UserRegister";
 import Address from "./Pages/Address";
 import OrderConfirmation from "./Pages/OrderConfirmation";
+import All_order from "./Pages/All_order";
 
 const Home = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const Home = () => {
   const isRegisterOpen = queryParams.get("register") === "open";
   const isAddressOpen = queryParams.get("shipping") === "open";
   const isConfirmationOpen = queryParams.get("orderconfirm") === "open";
+    const isSummaryOpen = queryParams.get("summary") === "open";
 
   const closeLogin = () => {
     queryParams.delete("login");
@@ -39,6 +41,11 @@ const Home = () => {
 
   const closeCart = () => {
     queryParams.delete("cart");
+    navigate(`${location.pathname}?${queryParams.toString()}`);
+  };
+  
+  const closeSummary = () => {
+    queryParams.delete("summary");
     navigate(`${location.pathname}?${queryParams.toString()}`);
   };
 
@@ -120,6 +127,22 @@ const Home = () => {
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
             <div className="rounded shadow-lg w-full md:w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <UserRegister />
+            </div>
+          </div>
+        </>
+      )}
+
+
+
+ {isSummaryOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black bg-opacity-40 z-50"
+            onClick={closeSummary}
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+            <div className="rounded shadow-lg md:w-[400px] w-full h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl bg-linear">
+              <All_order />
             </div>
           </div>
         </>

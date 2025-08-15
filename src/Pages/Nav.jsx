@@ -6,9 +6,8 @@ import axios from "../Components/axios";
 import Footer from "./Footer";
 
 const Nav = () => {
-
   const [searchBar, setSearchBar] = useState("");
-  const {product,setFilterProduct} = useContext(AppContext);
+  const { product, setFilterProduct } = useContext(AppContext);
 
   useEffect(() => {
     try {
@@ -21,6 +20,9 @@ const Nav = () => {
     }
   }, [searchBar]);
 
+  // array
+  const navCategory = ["local_mall", "footprint","steps","podiatry"];
+  const name = ["All", "Slipper","Shoes","Sandal"];
 
   // from here handle shrink
   const [shrink, setShrink] = useState(0);
@@ -31,10 +33,7 @@ const Nav = () => {
       const scrollTop = window.scrollY;
 
       if (scrollTop <= 50 || windowWidth >= 430) {
-        
         setShrink(false);
-
-
       } else {
         setShrink(true);
       }
@@ -43,19 +42,32 @@ const Nav = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleProduct = (item) => {
+    try {
+      if(item == 'All')  return setFilterProduct(product);
+
+      const fitered = product.filter((data) =>
+        data?.productTitle?.toLowerCase().includes(item.toLowerCase())
+      );
+      setFilterProduct(fitered);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300 ease-in bg-linear ${
+        className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300 ease-in bg-linear flex flex-col shadow-[0_4px_4px_rgba(0,0,0,0.2)] border-b${
           shrink ? "translate-y-[-30px]" : "translate-y-0"
         }`}
       >
         <div
-          className={`flex md:flex-row flex-col items-center justify-between px-4 py-1 transition-all duration-300  `}
+          className={`flex md:flex-row flex-col items-center justify-between px-4 py-1 transition-all duration-300  w-full`}
         >
           <div
             className={`
-        ${shrink ? "opacity-0 scale-0" : "opacity-100 scale-100"}`}
+        ${shrink ? "opacity-0 scale-0" : "opacity-500 scale-500"}`}
           >
             <div className="logoContainer">
               <Link to="/">
@@ -80,14 +92,25 @@ const Nav = () => {
               </div>
             </div>
           </div>
-          {windowWidth > 430 && (
-           <Footer/>
-          )}
+
+          {windowWidth > 430 && <Footer />}
+        </div>
+
+        <div className="w-full overflow-x-auto scrollbar-hide cursor-pointer">
+          <div className="flex" style={{ minWidth: "max-content" }}>
+            {navCategory.map((items, index) => (
+              <p
+                key={index}
+                className="p-2 text-[13px] md:text-[16px] md:p-4 bg-gray-100 text-center flex justify-center items-center"
+                onClick={() => handleProduct(name[index])}
+              >
+                <span class="material-symbols-outlined">{items}</span>
+                <span>{name[index]}</span>
+              </p>
+            ))}
+          </div>
         </div>
       </nav>
-      {/* {windowWidth <= 430 && (
-          <Footer/>
-      )} */}
     </>
   );
 };
