@@ -7,16 +7,13 @@ const All_order = () => {
   const userToken = localStorage.getItem("token");
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
-const navigate = useNavigate();
-const location = useLocation();
-const closeSummary = () =>{
+  const navigate = useNavigate();
+  const location = useLocation();
+  const closeSummary = () => {
     const currentUrl = new URLSearchParams(location.search);
-    currentUrl.delete('summary');
+    currentUrl.delete("summary");
     navigate(`${location.pathname}?${currentUrl.toString()}`);
-}
-
-
-
+  };
 
   useEffect(() => {
     const fetchAdd = async () => {
@@ -49,14 +46,13 @@ const closeSummary = () =>{
   }
   return (
     <div className="h-full w-full bg-linear flex justify-center items-center flex-col rounded-xl relative">
-        <div className="absolute top-3 right-3 text-red-500 cursor-pointer"
+      <div
+        className="absolute top-3 right-3 text-red-500 cursor-pointer"
+        onClick={closeSummary}
+      >
+        <span class="material-symbols-outlined">close</span>
+      </div>
 
-            onClick={closeSummary}
-          >
-            <span class="material-symbols-outlined">close</span>
-          </div>
-
-    
       <h1 className="font-bold text-[16px] md:text-2xl w-full p-3">
         Order Summary
       </h1>

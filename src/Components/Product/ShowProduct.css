@@ -51,6 +51,7 @@
       position: relative;
       @media (max-width: 430px) {
         height: 50%;
+        width: 90%;
         border-radius: 2px;
       }
 

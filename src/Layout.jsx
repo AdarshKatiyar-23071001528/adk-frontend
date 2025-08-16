@@ -16,6 +16,9 @@ const Address = lazy(() => import("./Pages/Address"));
 
 const Layout = () => {
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const isCartOpen = queryParams.get("cart") == "open";
+
   const hideNavRoute = [
     "/admin/register",
     "/admin/login",
@@ -24,7 +27,7 @@ const Layout = () => {
     "/admin/home/products",
     "/admin/home/orders",
     "/admin-protected/register",
-    "/admin-first-secured/login"
+    "/admin-first-secured/login",
   ];
 
   const shouldHideNav =
@@ -55,11 +58,8 @@ const Layout = () => {
       </main>
 
       {/* Footer only in mobile, fixed bottom */}
-      {isMobile && (
-        
-          <Footer />
-       
-      )}
+
+      {isMobile && !isCartOpen && <Footer />}
     </div>
   );
 };

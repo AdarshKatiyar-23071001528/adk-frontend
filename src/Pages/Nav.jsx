@@ -21,8 +21,8 @@ const Nav = () => {
   }, [searchBar]);
 
   // array
-  const navCategory = ["local_mall", "footprint","steps","podiatry"];
-  const name = ["All", "Slipper","Shoes","Sandal"];
+  const navCategory = ["local_mall", "footprint", "steps", "podiatry"];
+  const name = ["All", "Slipper", "Shoes", "Sandal"];
 
   // from here handle shrink
   const [shrink, setShrink] = useState(0);
@@ -42,9 +42,11 @@ const Nav = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+
+  // works on click on category section
   const handleProduct = (item) => {
     try {
-      if(item == 'All')  return setFilterProduct(product);
+      if (item == "All") return setFilterProduct(product);
 
       const fitered = product.filter((data) =>
         data?.productTitle?.toLowerCase().includes(item.toLowerCase())
@@ -58,7 +60,7 @@ const Nav = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300 ease-in bg-linear flex flex-col shadow-[0_4px_4px_rgba(0,0,0,0.2)] border-b${
+        className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300 ease-in bg-linear flex flex-col shadow-[0_4px_4px_rgba(0,0,0,0.2)] border-b ${
           shrink ? "translate-y-[-30px]" : "translate-y-0"
         }`}
       >
