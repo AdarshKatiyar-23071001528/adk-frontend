@@ -73,51 +73,47 @@ const Footer = () => {
   };
 
   //handle Order Summary
-  const handleOrderSummary = () =>{
+  const handleOrderSummary = () => {
     const currentUrl = new URLSearchParams(location.search);
-    currentUrl.set('summary','open');
+    currentUrl.set("summary", "open");
     navigate(`${location.pathname}?${currentUrl.toString()}`);
-  }
+  };
 
   return (
     <footer className="fixed bottom-0 left-0 z-50 w-full md:relative md:w-[150px]">
-      {/* tumhara baaki ka footer ka code yaha rahega */}
-
       <div
         className="thirdPart md:w-[150px] w-full md:relative"
         ref={dropdownRef}
       >
         <div className="otherContainer md:w-[150px] w-full">
-          <div className="menuContainer bg-blue-200  flex md:w-[150px]  w-full p-4 justify-between items-center md:bg-transparent h-full">
+          <div className="menuContainer bg-blue-200  flex md:w-[150px]  w-full p-4 justify-around  rounded-xl items-center md:bg-transparent h-full">
+            {/* cart */}
             <div
               className="cartContainer relative cursor-pointer"
               onClick={openCart}
             >
               <span className="material-symbols-outlined ">shopping_cart</span>
               {cartLength > 0 && (
-                <p className="absolute set-cart-length font-bold">
-                  {cartLength}
-                </p>
+                <div className="md:h-[20px] h-[10px] w-[10px] md:w-[20px] flex items-center justify-center rounded-full text-[10px] md:text-[13px] absolute top-[-10px] right-[-5px] bg-gray-300">
+                  {" "}
+                  <p>{cartLength}</p>
+                </div>
               )}
             </div>
 
+            {/* login */}
             <div className="loginContainer transition duration-300 delay-100 ease-in-out cursor-pointer">
-              {!login ? (
+              {!login && (
                 <div
                   className="onLogin flex flex-col gap-[3px] items-center"
                   onClick={onlogin}
                 >
                   <span class="material-symbols-outlined">account_circle</span>
                 </div>
-              ) : (
-                <div className="profile">
-                  <div className="flex flex-col gap-1 items-center">
-                    <span class="material-symbols-outlined">person</span>
-                  </div>
-                </div>
               )}
             </div>
 
+            {/* menu */}
             <div
               className="flex flex-col gap-1 items-center justify-center cursor-pointer "
               onClick={() => setIsOption(!isOptionOpen)}
@@ -143,11 +139,14 @@ const Footer = () => {
                     Admin
                   </div>
 
-
-                  <div className="hover:bg-blue-400 p-2 w-full"
-                   onClick={handleOrderSummary}>
-                    OrderSummary
-                  </div>
+                  {login && (
+                    <div
+                      className="hover:bg-blue-400 p-2 w-full"
+                      onClick={handleOrderSummary}
+                    >
+                      OrderSummary
+                    </div>
+                  )}
                 </div>
               </div>
             )}

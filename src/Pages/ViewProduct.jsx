@@ -7,6 +7,7 @@ import UserLogin from "../Components/User/Userlogin";
 import Cart from "./Cart";
 import UserRegister from "../Components/User/UserRegister";
 import AppContext from "../Context/AppContext";
+import Match from "./Match";
 
 const ViewProduct = () => {
   //from context api
@@ -119,7 +120,7 @@ const ViewProduct = () => {
               ₹ {specificProduct.productPrice}
             </p>
             <button
-              className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-xl font-semibold transition duration-300"
+              className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-xl font-semibold transition duration-300 fixed bottom-0 right-0 w-full md:w-fit md:relative"
               onClick={() => addCart(specificProduct)}
             >
               Add to Cart
@@ -159,6 +160,9 @@ const ViewProduct = () => {
         </div>
       </div>
 
+      <div className="w-full">
+          <Match/>
+      </div>
       {isLoginOpen && (
         <>
           <div
@@ -185,7 +189,6 @@ const ViewProduct = () => {
           </div>
         </>
       )}
-
       {isCartOpen && (
         <>
           <div

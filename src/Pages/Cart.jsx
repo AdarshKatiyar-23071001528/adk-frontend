@@ -360,14 +360,14 @@ const Cart = () => {
               <div className="gap-2 flex flex-col pd-12 md:pb-0">
                 <button
                   style={{ backgroundColor: "yellow" }}
-                  className="hover:bg-blue-600 border-2 w-full font-bold rounded py-2"
+                  className="hover:bg-blue-600  w-full font-bold rounded py-2"
                   onClick={openAddress}
                 >
                   Add New Address
                 </button>
                 <button
                   style={{ backgroundColor: "#3498db" }}
-                  className="hover:bg-blue-600 border-2 w-full font-bold rounded py-2"
+                  className="hover:bg-blue-600  w-full font-bold rounded py-2"
                   onClick={handlePayment}
                 >
                   {" "}

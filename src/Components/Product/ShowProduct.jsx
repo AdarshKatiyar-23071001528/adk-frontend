@@ -88,7 +88,7 @@ const ShowProduct = () => {
       {allProduct.map((item) => (
         <Link
           key={item._id}
-          to={`/product/${slugify(item.productTitle)}/${item._id}`}
+          to={`/product/${slugify(item.productTitle)}/${item.productCategory}/${item._id}`}
         >
           <div
             className="product border border-gray-200 md:w-1/5"

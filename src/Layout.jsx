@@ -8,6 +8,7 @@ import UserRegister from "./Components/User/UserRegister";
 import Home from "./Home";
 import OrderConfirmation from "./Pages/OrderConfirmation";
 import Footer from "./Pages/Footer";
+import GlobalFooter from "./Pages/GlobalFooter";
 
 const ViewProduct = lazy(() => import("./Pages/ViewProduct"));
 const Nav = lazy(() => import("./Pages/Nav"));
@@ -30,9 +31,12 @@ const Layout = () => {
     "/admin-first-secured/login",
   ];
 
+
   const shouldHideNav =
     hideNavRoute.includes(location.pathname) ||
     location.pathname.startsWith("/admin");
+
+  const shouldHideFooter = location.pathname.startsWith("/product");
 
   const isMobile = window.innerWidth <= 430;
 
@@ -45,7 +49,7 @@ const Layout = () => {
         <Suspense fallback="loading...">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/product/:title/:id" element={<ViewProduct />} />
+            <Route path="/product/:title/:category/:id" element={<ViewProduct />} />
             <Route path="/admin-protected/register" element={<Register />} />
             <Route path="/admin-first-secured/login" element={<Login />} />
             <Route path="/admin/home/*" element={<AdminHome />} />
@@ -59,7 +63,8 @@ const Layout = () => {
 
       {/* Footer only in mobile, fixed bottom */}
 
-      {isMobile && !isCartOpen && <Footer />}
+      {isMobile && !isCartOpen && !shouldHideFooter && <Footer />}
+       <GlobalFooter/>
     </div>
   );
 };

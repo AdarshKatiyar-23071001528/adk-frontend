@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import AddProduct from "./AddProduct";
-import "./AdminHome.css";
+// import "./AdminHome.css";
 import Dashboard from "./Dashboard";
 import AllProduct from "./AllProduct";
 import Edit from "./Edit";
