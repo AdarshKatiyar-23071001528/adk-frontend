@@ -8,6 +8,10 @@ import Cart from "./Cart";
 import UserRegister from "../Components/User/UserRegister";
 import AppContext from "../Context/AppContext";
 import Match from "./Match";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { IoMdShare,IoIosPricetags } from "react-icons/io";
+import { FaMoneyBill1Wave } from "react-icons/fa6";
+import { GiReturnArrow } from "react-icons/gi";
 
 const ViewProduct = () => {
   //from context api
@@ -22,6 +26,7 @@ const ViewProduct = () => {
   const isLoginOpen = fetchParams.get("login") === "open";
   const isCartOpen = fetchParams.get("cart") === "open";
   const isRegisterOpen = fetchParams.get("register") === "open";
+  const [like, setLike] = useState(false);
 
   const closeLogin = () => {
     fetchParams.delete("login");
@@ -104,11 +109,29 @@ const ViewProduct = () => {
   if (loading) return <Loading />;
   if (!specificProduct) return <Error />;
 
+  //Native share api
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Adk Mart",
+          text: "Check out this amazing website",
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.error("Native Share Error :", err.message);
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copied! Share it anywhere.");
+    }
+  };
+
   return (
     <>
-      <div className="flex flex-col md:flex-row min-h-screen gap-10 pt-[150px]  pb-[100px] md:pt-[170px]  w-full">
+      <div className="flex flex-col md:flex-row h-fit gap-4 pt-[150px] pb-[100px] md:pt-[170px] w-full">
         {/* LEFT SIDE - IMAGE + PRICE */}
-        <div className="left-viewItem-container md:sticky top-[140px]  md:w-1/2 flex flex-col gap-6 items-center md:rounded-xl shadow-md w-full">
+        <div className=" md:sticky top-[150px]  md:w-1/2 flex flex-col gap-6 items-center md:rounded-xl shadow-md w-full">
           <img
             src={specificProduct.productImg}
             alt="product"
@@ -129,11 +152,31 @@ const ViewProduct = () => {
         </div>
 
         {/* RIGHT SIDE - DETAILS */}
-        <div className="flex flex-col gap-4 md:w-1/2 bg-white  p-6 rounded-xl shadow-md ">
-          <h2 className="text-xl font-bold text-gray-700 mb-2 border-b pb-2">
+        <div className="flex flex-col gap-4 md:w-1/2 bg-whtie  p-6 rounded-xl shadow-md ">
+     
+          <div className="flex gap-2 w-full justify-between  pt-2 border-b">
+
+             <h2 className="text-xl font-bold text-gray-700 pb-2">
             Product Details
           </h2>
+             {/* like and share button */}
+            <div className="flex gap-2">
+              <p
+                className="text-[13px] md:text-[24px] cursor-pointer"
+                onClick={handleShare}
+              >
+                <IoMdShare />
+              </p>
+              <p
+                className="text-[13px] md:text-[24px]"
+                onClick={() => setLike(true)}
+              >
+                {like ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
+              </p>
+            </div>
+          </div>
 
+         
           {Object.entries(specificProduct).map(([key, value], index) => {
             if (["__v", "_id", "productImg", "createdAt"].includes(key))
               return null;
@@ -157,11 +200,22 @@ const ViewProduct = () => {
               </div>
             );
           })}
+
+
+          <div className="w-full">
+              <div className="flex justify-around">
+                <p className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2" ><FaMoneyBill1Wave className="text-green-400 text-[13px] md:text-[24px]"/>
+                  Cash On delivery</p>
+                <p className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2">
+                  <GiReturnArrow className="text-green-400 text-[13px] md:text-[24px]"/>7 Day Return </p>
+                <p className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2"><IoIosPricetags  className="text-green-400 text-[13px] md:text-[24px]"/>Lowest Price</p>
+              </div>
+          </div>
         </div>
       </div>
 
       <div className="w-full">
-          <Match/>
+        <Match />
       </div>
       {isLoginOpen && (
         <>
