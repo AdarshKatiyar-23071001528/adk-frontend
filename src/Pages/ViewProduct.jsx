@@ -9,7 +9,7 @@ import UserRegister from "../Components/User/UserRegister";
 import AppContext from "../Context/AppContext";
 import Match from "./Match";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { IoMdShare,IoIosPricetags } from "react-icons/io";
+import { IoMdShare, IoIosPricetags } from "react-icons/io";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { GiReturnArrow } from "react-icons/gi";
 
@@ -153,22 +153,20 @@ const ViewProduct = () => {
 
         {/* RIGHT SIDE - DETAILS */}
         <div className="flex flex-col gap-4 md:w-1/2 bg-whtie  p-6 rounded-xl shadow-md ">
-     
           <div className="flex gap-2 w-full justify-between  pt-2 border-b">
-
-             <h2 className="text-xl font-bold text-gray-700 pb-2">
-            Product Details
-          </h2>
-             {/* like and share button */}
+            <h2 className="text-xl font-bold text-gray-700 pb-2">
+              Product Details
+            </h2>
+            {/* like and share button */}
             <div className="flex gap-2">
               <p
-                className="text-[13px] md:text-[24px] cursor-pointer"
+                className="text-[16px] md:text-[24px] cursor-pointer"
                 onClick={handleShare}
               >
                 <IoMdShare />
               </p>
               <p
-                className="text-[13px] md:text-[24px]"
+                className="text-[16px] md:text-[24px]"
                 onClick={() => setLike(true)}
               >
                 {like ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
@@ -176,7 +174,6 @@ const ViewProduct = () => {
             </div>
           </div>
 
-         
           {Object.entries(specificProduct).map(([key, value], index) => {
             if (["__v", "_id", "productImg", "createdAt"].includes(key))
               return null;
@@ -201,15 +198,21 @@ const ViewProduct = () => {
             );
           })}
 
-
-          <div className="w-full">
-              <div className="flex justify-around">
-                <p className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2" ><FaMoneyBill1Wave className="text-green-400 text-[13px] md:text-[24px]"/>
-                  Cash On delivery</p>
-                <p className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2">
-                  <GiReturnArrow className="text-green-400 text-[13px] md:text-[24px]"/>7 Day Return </p>
-                <p className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2"><IoIosPricetags  className="text-green-400 text-[13px] md:text-[24px]"/>Lowest Price</p>
-              </div>
+          <div className="w-full p-2">
+            <div className="flex justify-around">
+              <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center">
+                <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center" ><FaMoneyBill1Wave /></p>
+                <p className="text-center">Cash On delivery</p>
+              </h1>
+               <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center">
+                <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center" ><GiReturnArrow/></p>
+                <p className="text-center">7 Days Return</p>
+              </h1>
+              <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center">
+                <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center" >< IoIosPricetags/></p>
+                <p className="text-center">Lowest Price</p>
+              </h1>
+            </div>
           </div>
         </div>
       </div>

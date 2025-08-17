@@ -80,14 +80,14 @@ const Match = () => {
   <div className="w-full h-[200px]  md:h-[300px] overflow-x-auto flex gap-3 items-center  md:justify-center ">
     {matchProduct.map((item,index)=>(
        
-         <div key={index} className="h-full min-w-[105px]  md:w-[200px]  flex flex-col border border-gray-400 justify-around p-2 rounded-xl"
+         <div key={index} className="h-full min-w-[130px]  md:w-[200px]  flex flex-col border border-gray-400 justify-around p-2 rounded-xl"
    >
               <Link
           key={item._id}
           to={`/product/${slugify2(item.productTitle)}/${item.productCategory}/${item._id}`}
         >
-            <div className="imgContainer w-[100%] h-[69%] rounded-xl border" onClick={gotoTop}>
-            <img src={item.productImg} className="object-fill min-h-full w-full rounded-xl" alt="" />
+            <div className="imgContainer w-[100%] md:h-[180px] h-[100px] rounded-xl border" onClick={gotoTop}>
+            <img src={item.productImg} className="object-fill h-full w-full rounded-xl" alt="" />
             </div></Link>
             
             <div className="p-2">

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../../Context/AppContext";
 import "./ShowProduct.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Error from "../../Pages/Error";
 import Loading from "../../Pages/Loading";
 import axios from "../axios";
+import UserLogin from "../User/Userlogin";
 
 // replace " " from "-" 
 const slugify = (text) =>
@@ -23,6 +24,14 @@ const ShowProduct = () => {
   const [error, setError] = useState(false); // ✅ error flag
   const [match, setMatch] = useState(true);
 
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const openLogin = () =>{
+    const currentUrl = new URLSearchParams(location.search);
+    currentUrl.set("login","open");
+    navigate(`${location.pathname}?${currentUrl.toString()}`)
+  }
   useEffect(() => {
     try {
       // if filterProduct length is more than 0
@@ -43,7 +52,9 @@ const ShowProduct = () => {
   const addCart = async (e, item) => {
     e.stopPropagation();
     e.preventDefault();
-    if (!userToken) return alert("Login First");
+    if (!userToken) {
+      openLogin();
+    }
     try {
       const { _id, productPrice, productTitle, productImg } = item;
       const res = await axios.post(
