@@ -14,6 +14,11 @@ const Cart = () => {
   const latestAddress = localStorage.getItem("userAddress");
   const currentUrl = new URLSearchParams(location.search);
 
+
+  // for item quantity
+  const [qty,setQty] = useState();
+
+
   const openAddress = () => {
     const fetchParams = new URLSearchParams(location.search);
     fetchParams.set("shipping", "open");
@@ -37,9 +42,15 @@ const Cart = () => {
     fetchUrl.delete("cart");
     navigate(`${location.pathname}?${fetchUrl.toString()}`);
   };
-  const addCart = async (e, item) => {
-    e.stopPropagation();
-    e.preventDefault();
+  const addCart = async (item) => {
+    const prevCart = [...cart];
+    
+    // frontend update
+    setCart(prevCart => prevCart.map((i)=> i.productId === item.productId ? {...i, productQty:i.productQty+1,  productPrice: i.productPrice + item.productPrice / i.productQty} : i));
+
+
+
+
     const { productId, productPrice, productTitle, productImg } = item;
     try {
       await axios.post(
@@ -54,10 +65,39 @@ const Cart = () => {
         }
       );
       fetchCart();
-    } catch (err) {}
+    } catch (err) {
+      setCart(prevCart);
+    }
   };
 
-  const delete_item = async (id) => {
+
+
+  const decrease_qty = async (id) => {
+    const prevCart = [...cart];
+
+    // frontend update 
+    setCart(prevCart => prevCart.map((i) => i.productId === id ? {...i,productQty:Math.max(i.productQty-1,0),productPrice:(i.productPrice/i.productQty)*(i.productQty-1)} : i))
+
+
+
+
+    try {
+      await axios.get(`/api/cart/decreaseQty/${id}`, {
+        headers: {
+          "Content-Type": "Application/json",
+          userToken: userToken,
+        },
+        withCredentials: true,
+      });
+      fetchCart();
+    } catch (error) {
+      console.error("Decrease Error : ", error.message);
+      setCart(prevCart);
+    }
+  };
+
+
+    const delete_item = async (id) => {
     try {
       const res = await axios.delete(`/api/cart/delete/${id}`, {
         headers: {
@@ -72,22 +112,6 @@ const Cart = () => {
       console.error("error : ", error.message);
     }
   };
-
-  const decrease_qty = async (id) => {
-    try {
-      await axios.get(`/api/cart/decreaseQty/${id}`, {
-        headers: {
-          "Content-Type": "Application/json",
-          userToken: userToken,
-        },
-        withCredentials: true,
-      });
-      fetchCart();
-    } catch (error) {
-      console.error("Decrease Error : ", error.message);
-    }
-  };
-
   const fetchCart = async () => {
     if (!userToken) return;
     try {
@@ -277,10 +301,15 @@ const Cart = () => {
               {/* items */}
               <div>
                 <h1 className="font-bold text-xl">Your items</h1>
-
+                  
                 <div className="overflow-x-auto max-h-[150px] md:max-h-[200px] overflow-y-auto w-full">
+                  {cart.length < 1  && <div className="text-center w-full  flex justify-center items-center flex-col "><p className="font-bold text-xl text-red-500">Cart is Empty</p>
+                  <button className="border p-2 bg-blue-400 rounded-xl mt-2" onClick={closeCart}>Add Items</button></div>}
+                  
                   <table className="table-fixed w-full border-collapse text-sm">
+                    
                     <tbody>
+                      
                       {cart?.map((item, index) => (
                         <tr key={index} className="text-center border-b">
                           <td className="w-[20%] p-2">
@@ -299,7 +328,7 @@ const Cart = () => {
                             <div className="flex items-center justify-center gap-2">
                               <button
                                 className="font-bold text-xl text-green-500"
-                                onClick={(e) => addCart(e, item)}
+                                onClick={() => addCart(item)}
                               >
                                 +
                               </button>
@@ -322,7 +351,8 @@ const Cart = () => {
               </div>
 
               {/* Clearification of payment  */}
-              <div className="w-full">
+
+              {cart.length >= 1 && <div className="w-full">
         
                 <h1 className="font-bold text-[13px] md:text-xl">Estimate</h1>
                 <p className="w-full flex justify-between items-center text-gray-500 text-[13px] md:text-[16px]">
@@ -334,7 +364,8 @@ const Cart = () => {
                   <span>Delivery</span>
                   <span>₹00.00</span>
                 </p>
-              </div>
+              </div>}
+            
 
               {/* //address */}
               <div>

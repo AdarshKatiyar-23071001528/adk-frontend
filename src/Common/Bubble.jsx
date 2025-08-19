@@ -41,9 +41,9 @@ const Bubble = () => {
         };
 
         return (
-          <div
+          <div 
             key={index}
-            className={`${color} absolute border glow-bubble animate-rise-rotate`}
+            className={`${color} absolute border glow-bubble animate-rise-rotate `}
             style={style}
           ></div>
         );

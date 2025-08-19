@@ -12,6 +12,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { IoMdShare, IoIosPricetags } from "react-icons/io";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { GiReturnArrow } from "react-icons/gi";
+import Loader from "./Loader";
 
 const ViewProduct = () => {
   //from context api
@@ -106,8 +107,8 @@ const ViewProduct = () => {
     fetchProduct();
   }, [id]);
 
-  if (loading) return <Loading />;
-  if (!specificProduct) return <Error />;
+  if (loading) return <Loader/>;
+  if (!specificProduct) return <Loader/>;
 
   //Native share api
   const handleShare = async () => {
@@ -198,23 +199,31 @@ const ViewProduct = () => {
             );
           })}
 
+          {/* tag static */}
           <div className="w-full p-2">
-            <div className="flex justify-around">
-              <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center">
+            <div className="flex justify-around gap-1 w-full">
+              <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center w-[25%]">
                 <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center" ><FaMoneyBill1Wave /></p>
                 <p className="text-center">Cash On delivery</p>
               </h1>
-               <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center">
+
+               <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center w-[25%]">
                 <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center" ><GiReturnArrow/></p>
                 <p className="text-center">7 Days Return</p>
               </h1>
-              <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center">
+
+              <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center w-[25%]">
                 <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center" >< IoIosPricetags/></p>
                 <p className="text-center">Lowest Price</p>
               </h1>
+
             </div>
           </div>
+
+
         </div>
+
+        
       </div>
 
       <div className="w-full">

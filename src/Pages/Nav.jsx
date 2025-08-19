@@ -23,6 +23,8 @@ const Nav = () => {
   // array
   const navCategory = ["local_mall", "footprint", "steps", "podiatry"];
   const name = ["All", "Slipper", "Shoes", "Sandal"];
+  const navColor = ["bg-linear","bg-linear-red","bg-linear-pink","bg-linear-green"];
+  const [nColor, setNavColor] = useState('bg-linear');
 
   // from here handle shrink
   const [shrink, setShrink] = useState(0);
@@ -44,23 +46,29 @@ const Nav = () => {
 
 
   // works on click on category section
-  const handleProduct = (item) => {
+  const handleProduct = (item,index) => {
     try {
-      if (item == "All") return setFilterProduct(product);
+      if (item == "All") {
+        setFilterProduct(product);
+      }
 
-      const fitered = product.filter((data) =>
+      else{
+        const fitered = product.filter((data) =>
         data?.productTitle?.toLowerCase().includes(item.toLowerCase())
-      );
+      )
       setFilterProduct(fitered);
+      }
+      setNavColor(navColor[index])
     } catch (error) {
       console.log(error.message);
     }
   };
 
+  
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300 ease-in bg-linear flex flex-col shadow-[0_4px_4px_rgba(0,0,0,0.2)] border-b ${
+        className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-500 ease-in ${nColor} flex flex-col shadow-[0_4px_4px_rgba(0,0,0,0.2)] border-b ${
           shrink ? "translate-y-[-30px]" : "translate-y-0"
         }`}
       >
@@ -97,14 +105,16 @@ const Nav = () => {
 
           {windowWidth > 430 && <Footer />}
         </div>
+        
 
+        {/* category Nav */}
         <div className="w-full overflow-x-auto scrollbar-hide cursor-pointer">
           <div className="flex" style={{ minWidth: "max-content" }}>
             {navCategory.map((items, index) => (
               <p
                 key={index}
-                className="p-2 text-[13px] md:text-[16px] md:p-4 bg-gray-100 text-center flex justify-center items-center"
-                onClick={() => handleProduct(name[index])}
+                className="p-2 text-[13px] md:text-[16px] md:p-4  text-center flex justify-center items-center"
+                onClick={() => handleProduct(name[index],index)}
               >
                 <span class="material-symbols-outlined">{items}</span>
                 <span>{name[index]}</span>

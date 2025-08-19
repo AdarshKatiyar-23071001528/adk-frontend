@@ -77,7 +77,7 @@ const Match = () => {
   <div>
     <h1 className="font-bold text-xl md:text-2xl p-1">Related Product:</h1>
   </div>
-  <div className="w-full h-[200px]  md:h-[300px] overflow-x-auto flex gap-3 items-center  md:justify-center ">
+  <div className="w-full h-[230px]  md:h-[300px] overflow-x-auto flex gap-3 items-center  md:justify-center ">
     {matchProduct.map((item,index)=>(
        
          <div key={index} className="h-full min-w-[130px]  md:w-[200px]  flex flex-col border border-gray-400 justify-around p-2 rounded-xl"
@@ -95,6 +95,7 @@ const Match = () => {
                 <p>{item.prodcutQty}</p>
                 <p className="truncate">{item.productTitle}</p>
             </div>
+            
             <div className="w-full p-1 flex justify-center items-center bg-pink-400 rounded-xl z-100">
                 <button onClick={(e)=>addCart(e,item)}>ADD</button>
             </div>

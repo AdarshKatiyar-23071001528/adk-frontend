@@ -1,6 +1,15 @@
 .bg-linear{
     background: linear-gradient(#3587db , white , white, white);
 }
+.bg-linear-red{
+    background: linear-gradient(rgba(255, 0, 0, 0.905) , white , white, white);
+}
+.bg-linear-pink{
+    background: linear-gradient(rgba(255, 0, 255, 0.956), white , white, white);
+}
+.bg-linear-green{
+    background: linear-gradient(rgba(0, 128, 0, 0.966) , white , white, white);
+}
 .scrollbar-hide{
     -ms-overflow-style: none; /*ie and edge*/
     scrollbar-width: none;

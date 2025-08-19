@@ -8,17 +8,17 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 150px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
   overflow: hidden;
 
   @media (max-width: 640px) {
     justify-content: center;
-    padding: 150px 10px 100px 10px;
+    padding: 10px 10px 100px 10px;
     grid-template-columns: repeat(4, 1fr);
   }
   @media (max-width: 430px) {
     justify-content: space-around;
-    padding: 150px 10px 100px 10px;
+    padding: 10px 10px 100px 10px;
     /* grid-template-columns: repeat(3, 1fr); */
   }
 
@@ -104,6 +104,7 @@
     border-radius: 5px;
     border: none;
     outline: none;
+    border: 1px rgba(128, 128, 128, 0.343) solid;
     backdrop-filter: blur(5px);
     color:black;
    

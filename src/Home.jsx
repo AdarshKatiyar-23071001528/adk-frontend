@@ -58,7 +58,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center w-full">
       <ShowProduct />
 
       {isCartOpen && (
