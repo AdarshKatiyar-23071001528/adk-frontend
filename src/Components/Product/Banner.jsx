@@ -3,7 +3,7 @@ import Bubble from '../../Common/Bubble';
 
 const Banner = () => {
   return (
-    <div className='w-full h-fit md:h-[330px] flex items-center justify-center p-4 relative'>
+    <div className='w-full h-fit md:h-[330px] flex items-center justify-center relative'>
       <div className='w-full h-full  p-1 md:p-2 flex items-center justify-center rounded-xl relative'>
             {/* <img src="https://www.shutterstock.com/image-vector/25-rupee-off-sale-discount-260nw-2142090371.jpg" className='w-full h-full object-contains rounded-xl' alt="" /> */}
             <div className='w-full h-full bg-linear rounded-xl flex text-pretty flex-col p-1 md:p-3 shadow-b-lg border relative overflow-hidden'>
