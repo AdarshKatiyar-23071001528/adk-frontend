@@ -41,7 +41,7 @@ const CategorySection = () => {
 
   return (
 
-    <section className="relative w-full h-[100px] md:h-[200px] flex items-center ">
+    <section className="relative w-full h-fit flex items-center ">
       <div className="absolute left-2 md:left-4 h-[20px] w-[20px] md:h-[40px] md:w-[40px] rounded-full  flex text-[13px] md:text-xl p-1"
        onClick={scrollLeft}>
         <button className="m-auto p-auto"><FaChevronLeft /></button>
