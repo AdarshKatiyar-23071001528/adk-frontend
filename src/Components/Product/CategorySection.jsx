@@ -63,7 +63,7 @@ const CategorySection = () => {
                 alt=""
               />
             </div>
-            <p className="w-full pl-2">{item}</p>
+            <p className="w-full pl-2 truncate">{item}</p>
           </div>
         ))}
       </div>
