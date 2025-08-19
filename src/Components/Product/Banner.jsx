@@ -11,7 +11,7 @@ const Banner = () => {
                 <h1 className='font-bold text-center text-xl md:text-6xl p-1 md:p-3'>Big Deal</h1>
                 <h2 className='text-center font-bold text-xl md:text-3xl p-1 md:p-3 text-'>Only 25</h2>
                 <h3 className='text-center font-bold text-xl md:text-3xl p-1 md:p-3 text-gray-600'>150 <span className='text-red-600'>%</span> Earning</h3>
-                <button className='p-2 bg-blue-400 w-[10%] rounded-xl font-bold shadow-lg'>Order Now</button>
+                <button className='p-2 bg-blue-400 w-[10%] rounded-xl font-bold shadow-lg absolute bottom-0 left-0'>Order Now</button>
                   <Bubble/>
             </div>
       </div>
