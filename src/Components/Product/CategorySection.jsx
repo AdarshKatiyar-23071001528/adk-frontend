@@ -42,7 +42,7 @@ const CategorySection = () => {
   return (
 
     <section className="relative w-full h-[100px] md:h-[200px] flex items-center ">
-      <div className="absolute left-2 md:left-4 h-[20px] w-[20px] md:h-[40px] md:w-[40px] rounded-full bg-blue-300 flex text-[13px] md:text-xl p-1"
+      <div className="absolute left-2 md:left-4 h-[20px] w-[20px] md:h-[40px] md:w-[40px] rounded-full  flex text-[13px] md:text-xl p-1"
        onClick={scrollLeft}>
         <button className="m-auto p-auto"><FaChevronLeft /></button>
       </div>
@@ -56,7 +56,7 @@ const CategorySection = () => {
             key={index}
             className=" min-w-[120px] md:min-w-[200px] h-full flex flex-col border rounded-xl p-2"
           >
-            <div className="w-full h-[90%] bg-gray-400 rounded-xl">
+            <div className="w-full h-[90%] rounded-xl">
               <img
                 src={spice}
                 className="object-fill h-full w-full rounded-xl"
@@ -69,7 +69,7 @@ const CategorySection = () => {
       </div>
 
 
-        <div className="absolute  right-2 md:right-4 w-[20px] h-[20px] md:h-[40px] md:w-[40px] rounded-full bg-blue-300 flex text-[13px] md:text-xl p-1" onClick={scrollRight}>
+        <div className="absolute  right-2 md:right-4 w-[20px] h-[20px] md:h-[40px] md:w-[40px] rounded-full flex text-[13px] md:text-xl p-1" onClick={scrollRight}>
         <button className="m-auto p-auto"><FaChevronRight /></button>
       </div>
     </section>

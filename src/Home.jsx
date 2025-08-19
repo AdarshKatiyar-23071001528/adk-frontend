@@ -9,6 +9,8 @@ import UserRegister from "./Components/User/UserRegister";
 import Address from "./Pages/Address";
 import OrderConfirmation from "./Pages/OrderConfirmation";
 import All_order from "./Pages/All_order";
+import CategorySection from "./Components/Product/CategorySection";
+import Banner from "./Components/Product/Banner";
 
 const Home = () => {
   const location = useLocation();
@@ -19,7 +21,7 @@ const Home = () => {
   const isRegisterOpen = queryParams.get("register") === "open";
   const isAddressOpen = queryParams.get("shipping") === "open";
   const isConfirmationOpen = queryParams.get("orderconfirm") === "open";
-    const isSummaryOpen = queryParams.get("summary") === "open";
+  const isSummaryOpen = queryParams.get("summary") === "open";
 
   const closeLogin = () => {
     queryParams.delete("login");
@@ -43,7 +45,7 @@ const Home = () => {
     queryParams.delete("cart");
     navigate(`${location.pathname}?${queryParams.toString()}`);
   };
-  
+
   const closeSummary = () => {
     queryParams.delete("summary");
     navigate(`${location.pathname}?${queryParams.toString()}`);
@@ -58,7 +60,9 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex items-center w-full">
+    <section className="pt-[180px] md:pt-[150px] w-full ">
+      <CategorySection/>
+      <Banner />
       <ShowProduct />
 
       {isCartOpen && (
@@ -132,9 +136,7 @@ const Home = () => {
         </>
       )}
 
-
-
- {isSummaryOpen && (
+      {isSummaryOpen && (
         <>
           <div
             className="fixed inset-0 bg-black bg-opacity-40 z-50"
@@ -147,7 +149,7 @@ const Home = () => {
           </div>
         </>
       )}
-    </div>
+    </section>
   );
 };
 
