@@ -23,6 +23,7 @@
 .pro_price,
 .pro_qty,
 .pro_category,
+.pro_Maincategory,
 .pro_img {
   max-height: 10%;
   padding: 20px;

@@ -9,6 +9,8 @@ import Home from "./Home";
 import OrderConfirmation from "./Pages/OrderConfirmation";
 import Footer from "./Pages/Footer";
 import GlobalFooter from "./Pages/GlobalFooter";
+import SubCategory from "./Pages/SubCategory";
+import Search from "./Pages/Search";
 
 const ViewProduct = lazy(() => import("./Pages/ViewProduct"));
 const Nav = lazy(() => import("./Pages/Nav"));
@@ -50,6 +52,7 @@ const Layout = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/product/:title/:category/:id" element={<ViewProduct />} />
+            <Route path="/cn/:item" element={<SubCategory/>}/>
             <Route path="/admin-protected/register" element={<Register />} />
             <Route path="/admin-first-secured/login" element={<Login />} />
             <Route path="/admin/home/*" element={<AdminHome />} />
@@ -57,6 +60,7 @@ const Layout = () => {
             <Route path="/register" element={<UserRegister />} />
             <Route path="/shipping" element={<Address />} />
             <Route path="/confirmation" element={<OrderConfirmation />} />
+            <Route path= "/search" element ={<Search/>}/>
           </Routes>
         </Suspense>
       </main>

@@ -11,6 +11,7 @@ const AddProduct = () => {
     productDesc: "",
     productCategory: "",
     productImg: "",
+    productMainCategory:"",
     productQty: "",
   });
 
@@ -30,6 +31,7 @@ const AddProduct = () => {
         formData.productTitle === "" ||
         formData.productDesc == "" ||
         formData.productCategory === "" ||
+        formData.productMainCategory === "" ||
         formData.productImg == "" ||
         formData.productPrice == "" ||
         formData.productQty == ""
@@ -95,6 +97,18 @@ const AddProduct = () => {
                   value={FormData.productCategory}
                   required
                   placeholder="Enter Product category"
+                />
+              </div>
+
+              <div className="pro_Maincategory">
+                <span>Main Categrory :</span>
+                <input
+                  type="text"
+                  name="productMainCategory"
+                  onChange={(e) => handleChange(e)}
+                  value={FormData.productMainCategory}
+                  required
+                  placeholder="Enter Product Maincategory"
                 />
               </div>
             </>

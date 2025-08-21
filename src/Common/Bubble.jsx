@@ -32,7 +32,7 @@ const Bubble = () => {
         const { size, position, delay, color } = bubble;
 
         const style = {
-          animationDelay: `${delay}s`,
+          animationDelay: `${delay+2}s`,
           bottom: "-100px",
           height: `${size}vw`,
           width: `${size}vw`,

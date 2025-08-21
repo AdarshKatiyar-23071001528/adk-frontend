@@ -1,5 +1,6 @@
 .bg-linear{
     background: linear-gradient(#3587db , white , white, white);
+  
 }
 .bg-linear-red{
     background: linear-gradient(rgba(255, 0, 0, 0.905) , white , white, white);
@@ -9,6 +10,10 @@
 }
 .bg-linear-green{
     background: linear-gradient(rgba(0, 128, 0, 0.966) , white , white, white);
+}
+.bg-category{
+    background: linear-gradient(white ,#f8f8f82c , #3588db7e,#3487dbb5);
+   
 }
 .scrollbar-hide{
     -ms-overflow-style: none; /*ie and edge*/

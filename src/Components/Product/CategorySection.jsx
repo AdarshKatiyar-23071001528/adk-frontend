@@ -1,10 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import spice from'./../../assets/spice.png';
+import { Link } from "react-router-dom";
 
 const CategorySection = () => {
   const Category = [
-    "Spice",
+    "Footwear",
     "Biscuits",
     "Namkeen",
     "Soap",
@@ -52,6 +53,7 @@ const CategorySection = () => {
       ref={scrollRef}
       className="flex gap-2 items-center overflow-x-auto p-2 w-full scrollbar-hide scroll-smooth" >
         {Category.map((item, index) => (
+         <Link to={`/cn/${item}`}> 
           <div
             key={index}
             className=" min-w-[120px] md:min-w-[200px] h-full flex flex-col border rounded-xl p-2"
@@ -64,7 +66,7 @@ const CategorySection = () => {
               />
             </div>
             <p className="w-full pl-2 truncate">{item}</p>
-          </div>
+          </div></Link>
         ))}
       </div>
 

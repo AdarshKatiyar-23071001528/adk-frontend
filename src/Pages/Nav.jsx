@@ -89,7 +89,7 @@ const Nav = () => {
           </div>
 
           <div className="secondPart p-2 md:w-[40%] w-full md:relative ">
-            <div className="searchContainer flex rounded-md  items-center text-center bg-white border-2 border-gray-400">
+           <Link to ={'/search'}> <div className="searchContainer flex rounded-md  items-center text-center bg-white border-2 border-gray-400">
               <input
                 type="text"
                 onChange={(e) => setSearchBar(e.target.value)}
@@ -100,7 +100,7 @@ const Nav = () => {
               <div className="flex items-center justify-center w-[40px]">
                 <span className="material-symbols-outlined">search</span>
               </div>
-            </div>
+            </div> </Link>
           </div>
 
           {windowWidth > 430 && <Footer />}

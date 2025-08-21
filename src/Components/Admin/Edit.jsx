@@ -10,6 +10,7 @@ const Edit = () => {
     productPrice: "",
     productDesc: "",
     productCategory: "",
+    productMainCategory: "",
     productImg: "",
     productQty: "",
   });
@@ -25,6 +26,7 @@ const Edit = () => {
         productPrice: res.data.product.productPrice || "",
         productDesc: res.data.product.productDesc || "",
         productCategory: res.data.product.productCategory || "",
+            productMainCategory: res.data.product.productMainCategory || "",
         productImg: res.data.product.productImg || "",
         productQty: res.data.product.productQty || "",
       });
@@ -46,6 +48,7 @@ const Edit = () => {
         formData.productTitle === "" ||
         formData.productDesc == "" ||
         formData.productCategory === "" ||
+        formData.productMainCategory === "" ||
         formData.productImg == "" ||
         formData.productPrice == "" ||
         formData.productQty == ""
@@ -108,6 +111,18 @@ const Edit = () => {
               name="productCategory"
               onChange={handleChange}
               value={formData.productCategory}
+              required
+              placeholder="Enter Product category"
+            />
+          </div>
+
+           <div className="pro_Maincategory">
+            <span>Main Category :</span>
+            <input
+              type="text"
+              name="productMainCategory"
+              onChange={handleChange}
+              value={formData.productMainCategory}
               required
               placeholder="Enter Product category"
             />

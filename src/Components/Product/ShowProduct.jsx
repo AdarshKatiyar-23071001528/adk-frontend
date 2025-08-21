@@ -18,9 +18,9 @@ const slugify = (text) =>
     .replace(/[^\w\-]+/g, "");
 
 const ShowProduct = () => {
-  const { setViewId, filterProduct, userToken, setCartLength } =
+  const { setViewId, filterProduct, userToken, setCartLength,product } =
     useContext(AppContext);
-  const [allProduct, setAllProduct] = useState(null);
+  const [allProduct, setAllProduct] = useState(product);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false); // ✅ error flag
   const [match, setMatch] = useState(true);
