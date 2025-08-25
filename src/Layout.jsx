@@ -11,6 +11,7 @@ import Footer from "./Pages/Footer";
 import GlobalFooter from "./Pages/GlobalFooter";
 import SubCategory from "./Pages/SubCategory";
 import Search from "./Pages/Search";
+import SpecificOrder from "./Pages/SpecificOrder";
 
 const ViewProduct = lazy(() => import("./Pages/ViewProduct"));
 const Nav = lazy(() => import("./Pages/Nav"));
@@ -61,6 +62,7 @@ const Layout = () => {
             <Route path="/shipping" element={<Address />} />
             <Route path="/confirmation" element={<OrderConfirmation />} />
             <Route path= "/search" element ={<Search/>}/>
+            <Route path= "/order/:orderId" element ={<SpecificOrder/>}/>
           </Routes>
         </Suspense>
       </main>

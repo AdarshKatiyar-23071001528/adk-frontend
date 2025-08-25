@@ -9,7 +9,7 @@ const Footer = () => {
 
   const [isOptionOpen, setIsOption] = useState(false);
   const { userToken, cartLength, setCartLength } = useContext(AppContext);
-
+// console.log(orderlength);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -139,7 +139,7 @@ const Footer = () => {
                     Admin
                   </div>
 
-                  {login && (
+                  {login &&( 
                     <div
                       className="hover:bg-blue-400 p-2 w-full"
                       onClick={handleOrderSummary}

@@ -11,8 +11,9 @@ const AppState = (props) => {
   let [filterProduct, setFilterProduct] = useState([]);
   let [isAuthenticate, setIsAuthenticate] = useState(false);
   const [cartLength, setCartLength] = useState("");
-  const [userProfile, setUserProfile] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [userId, setUserId] = useState(null);
+
   // for admin
   const [users, setUsers] = useState([]);
 
@@ -98,6 +99,9 @@ const AppState = (props) => {
         setUserId,
         users,
         setUsers,
+        cartItems,
+        setCartItems,
+      
   
       }}
     >

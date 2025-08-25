@@ -81,18 +81,19 @@ const Home = () => {
       </div>
 
       {isLoginOpen && (
-        <>
+     
           <div
             className="fixed inset-0 bg-black bg-opacity-40 z-50 "
             onClick={closeLogin}
-          />
-          <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="  rounded shadow-lg w-full md:w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+          ></div>)}
+      <>
+          <div className={`fixed top-0 right-0 z-50 flex items-center justify-center pointer-events-none w-full h-full transition-transform duration-300 ${isLoginOpen ? "translate-y-0" : "translate-y-full"}`}>
+            <div className={`shadow-lg w-full md:w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl`}>
               <UserLogin />
             </div>
           </div>
         </>
-      )}
+    
 
       {isAddressOpen && (
         <>
@@ -101,7 +102,7 @@ const Home = () => {
             onClick={closeAddress}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="p-6 rounded shadow-lg md:w-[400px] w-full h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="p-6 shadow-lg md:w-[400px] w-full h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <Address />
             </div>
           </div>
@@ -143,7 +144,7 @@ const Home = () => {
             onClick={closeSummary}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="rounded shadow-lg md:w-[400px] w-full h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl bg-linear">
+            <div className="shadow-lg md:w-[400px] w-full h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl bg-linear">
               <All_order />
             </div>
           </div>

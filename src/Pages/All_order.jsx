@@ -2,6 +2,8 @@ import axios from "../Components/axios";
 import React, { useEffect, useState } from "react";
 import Loading from "./Loading";
 import { useLocation, useNavigate } from "react-router-dom";
+import NotOrder from "./NotOrder";
+import { Link } from "react-router-dom";
 
 const All_order = () => {
   const userToken = localStorage.getItem("token");
@@ -24,6 +26,7 @@ const All_order = () => {
             "Content-Type": "Application/json",
             userToken,
           },
+          
           withCredentials: true,
         });
         setData(res?.data?.order);
@@ -46,6 +49,8 @@ const All_order = () => {
   }
   return (
     <div className="h-full w-full bg-linear flex justify-center items-center flex-col rounded-xl relative">
+
+      {/* cross mark for close  */}
       <div
         className="absolute top-3 right-3 text-red-500 cursor-pointer"
         onClick={closeSummary}
@@ -56,8 +61,15 @@ const All_order = () => {
       <h1 className="font-bold text-[16px] md:text-2xl w-full p-3">
         Order Summary
       </h1>
-      <div className="w-full h-[300px] overflow-y-auto p-3 ">
+
+
+       <div className="w-full h-[300px] overflow-y-auto p-3 ">
+         {data.length <= 0 ? <NotOrder/> :<>
+
+
         {data?.map((item, index) => (
+
+          <Link to={`/order/${item.orderId}`}>
           <div
             key={index}
             className="w-full border border-gray-300 rounded-xl mb-2 shadow-lg"
@@ -90,9 +102,11 @@ const All_order = () => {
                 </tbody>
               </table>
             </div>
-          </div>
-        ))}
-      </div>
+          </div></Link>
+        ))} </>}
+      </div> 
+
+     
     </div>
   );
 };

@@ -54,9 +54,10 @@ const ViewProduct = () => {
 
   //add cart
   const addCart = async (product) => {
+
     const userToken = localStorage.getItem("token");
     if (!userToken) return alert("Login first");
-    const { _id, productPrice, productImg, productTitle } = product;
+    const { _id, productPrice,  productCategory, productImg, productTitle } = product;
     try {
       const res = await axios.post(
         "/api/cart/add",
@@ -66,6 +67,7 @@ const ViewProduct = () => {
           productTitle,
           productImg,
           productQty: 1,
+          productCategory,
         },
         {
           headers: {
@@ -75,7 +77,7 @@ const ViewProduct = () => {
           withCredentials: true,
         }
       );
-
+     
       if (res.data.message !== "Updated Item") {
         setCartLength(res.data.cart.items.length);
         window.location.reload();
@@ -227,7 +229,7 @@ const ViewProduct = () => {
       </div>
 
       <div className="w-full">
-        <Match />
+        <Match proCategory={specificProduct?.productCategory} />
       </div>
       {isLoginOpen && (
         <>

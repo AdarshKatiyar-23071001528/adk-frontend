@@ -2,22 +2,27 @@ import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../Context/AppContext";
 import axios from "../Components/axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import ShowProduct from "../Components/Product/ShowProduct";
 
 const Cart = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { userToken, setCartLength, userId, setUserId } =
-    useContext(AppContext);
+  const {
+    userToken,
+    setCartLength,
+    userId,
+    setUserId,
+    setCartItems,
+    cartItems,
+  } = useContext(AppContext);
   const [cart, setCart] = useState([]);
   const [address, setAddress] = useState([]);
   const latestAddress = localStorage.getItem("userAddress");
   const currentUrl = new URLSearchParams(location.search);
 
-
   // for item quantity
-  const [qty,setQty] = useState();
-
+  const [qty, setQty] = useState();
 
   const openAddress = () => {
     const fetchParams = new URLSearchParams(location.search);
@@ -42,20 +47,42 @@ const Cart = () => {
     fetchUrl.delete("cart");
     navigate(`${location.pathname}?${fetchUrl.toString()}`);
   };
+
+  // add cart
   const addCart = async (item) => {
     const prevCart = [...cart];
-    
+
     // frontend update
-    setCart(prevCart => prevCart.map((i)=> i.productId === item.productId ? {...i, productQty:i.productQty+1,  productPrice: i.productPrice + item.productPrice / i.productQty} : i));
+    setCart((prevCart) =>
+      prevCart.map((i) =>
+        i.productId === item.productId
+          ? {
+              ...i,
+              productQty: i.productQty + 1,
+              productPrice: i.productPrice + item.productPrice / i.productQty,
+            }
+          : i
+      )
+    );
 
-
-
-
-    const { productId, productPrice, productTitle, productImg } = item;
+    const {
+      productId,
+      productPrice,
+      productTitle,
+      productImg,
+      productCategory,
+    } = item;
     try {
-      await axios.post(
+      const res = await axios.post(
         "/api/cart/add",
-        { productId, productQty: 1, productPrice, productTitle, productImg },
+        {
+          productId,
+          productQty: 1,
+          productPrice,
+          productTitle,
+          productImg,
+          productCategory,
+        },
         {
           headers: {
             "Content-Type": "Application/json",
@@ -70,16 +97,22 @@ const Cart = () => {
     }
   };
 
-
-
   const decrease_qty = async (id) => {
     const prevCart = [...cart];
 
-    // frontend update 
-    setCart(prevCart => prevCart.map((i) => i.productId === id ? {...i,productQty:Math.max(i.productQty-1,0),productPrice:(i.productPrice/i.productQty)*(i.productQty-1)} : i))
-
-
-
+    // frontend update
+    setCart((prevCart) =>
+      prevCart.map((i) =>
+        i.productId === id
+          ? {
+              ...i,
+              productQty: Math.max(i.productQty - 1, 0),
+              productPrice:
+                (i.productPrice / i.productQty) * (i.productQty - 1),
+            }
+          : i
+      )
+    );
 
     try {
       await axios.get(`/api/cart/decreaseQty/${id}`, {
@@ -96,8 +129,7 @@ const Cart = () => {
     }
   };
 
-
-    const delete_item = async (id) => {
+  const delete_item = async (id) => {
     try {
       const res = await axios.delete(`/api/cart/delete/${id}`, {
         headers: {
@@ -143,7 +175,7 @@ const Cart = () => {
 
   useEffect(() => {
     fetchCart();
-  }, [userToken]);
+  }, [userToken,cartItems]);
 
   // fetch saved latest address from userid and store it on address
   useEffect(() => {
@@ -264,10 +296,17 @@ const Cart = () => {
     }
   };
 
+  const slugify = (text) =>
+    text
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^\w\-]/g, "");
+
+  setCartItems(cart);
   return (
     <>
       {!userToken ? (
-        <div className="relative w-full h-screen bg-black-10 flex items-center justify-center flex-col p-10 gap-6 relative overflow-hidden">
+        <div className="relative w-full h-screen bg-black-10 flex items-center justify-center flex-col p-10 gap-6 overflow-hidden">
           <div
             className="flex items-center absolute top-4  w-full  pl-5"
             onClick={closeCart}
@@ -290,7 +329,6 @@ const Cart = () => {
             <div className="h-full bg-blue-300 w-full  flex flex-col p-5  justify-between  fixed top-0 left-0 ">
               {/* cart content and arrow */}
 
-
               <div className="flex items-center" onClick={closeCart}>
                 <span className="material-symbols-outlined">
                   arrow_back_ios
@@ -301,18 +339,36 @@ const Cart = () => {
               {/* items */}
               <div>
                 <h1 className="font-bold text-xl">Your items</h1>
-                  
+
                 <div className="overflow-x-auto max-h-[150px] md:max-h-[200px] overflow-y-auto w-full">
-                  {cart.length < 1  && <div className="text-center w-full  flex justify-center items-center flex-col "><p className="font-bold text-xl text-red-500">Cart is Empty</p>
-                  <button className="border p-2 bg-blue-400 rounded-xl mt-2" onClick={closeCart}>Add Items</button></div>}
-                  
+                  {cart.length < 1 && (
+                    <div className="text-center w-full  flex justify-center items-center flex-col ">
+                      <p className="font-bold text-xl text-red-500">
+                        Cart is Empty
+                      </p>
+                      <button
+                        className="border p-2 bg-blue-400 rounded-xl mt-2"
+                        onClick={closeCart}
+                      >
+                        Add Items
+                      </button>
+                    </div>
+                  )}
+
                   <table className="table-fixed w-full border-collapse text-sm">
-                    
                     <tbody>
-                      
                       {cart?.map((item, index) => (
-                        <tr key={index} className="text-center border-b">
-                          <td className="w-[20%] p-2">
+                        <tr className="text-center border-b">
+                          <td
+                            className="w-[20%] p-2 cursor-pointer"
+                            onClick={() =>
+                              navigate(
+                                `/product/${slugify(item.productTitle)}/${
+                                  item.productCategory
+                                }/${item.productId}`
+                              )
+                            }
+                          >
                             <img
                               src={item.productImg}
                               alt="product"
@@ -320,7 +376,16 @@ const Cart = () => {
                             />
                           </td>
 
-                          <td className="w-[25%] p-2 truncate">
+                          <td
+                            className="w-[25%] p-2 truncate cursor-pointer"
+                            onClick={() =>
+                              navigate(
+                                `/product/${slugify(item.productTitle)}/${
+                                  item.productCategory
+                                }/${item.productId}`
+                              )
+                            }
+                          >
                             {item.productTitle}
                           </td>
 
@@ -342,7 +407,18 @@ const Cart = () => {
                             </div>
                           </td>
 
-                          <td className="w-[25%] p-2">₹{item.productPrice}</td>
+                          <td
+                            className="w-[25%] p-2 cursor-pointer"
+                            onClick={() =>
+                              navigate(
+                                `/product/${slugify(item.productTitle)}/${
+                                  item.productCategory
+                                }/${item.productId}`
+                              )
+                            }
+                          >
+                            ₹{item.productPrice}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -352,20 +428,20 @@ const Cart = () => {
 
               {/* Clearification of payment  */}
 
-              {cart.length >= 1 && <div className="w-full">
-        
-                <h1 className="font-bold text-[13px] md:text-xl">Estimate</h1>
-                <p className="w-full flex justify-between items-center text-gray-500 text-[13px] md:text-[16px]">
-                  <span>Items</span>
-                  <span>{totalQty}</span>
-                  <span>₹{totalPrice}.00</span>
-                </p>
-                <p className="w-full flex justify-between items-center text-gray-500 text-[13px] md:text-[16px]">
-                  <span>Delivery</span>
-                  <span>₹00.00</span>
-                </p>
-              </div>}
-            
+              {cart.length >= 1 && (
+                <div className="w-full">
+                  <h1 className="font-bold text-[13px] md:text-xl">Estimate</h1>
+                  <p className="w-full flex justify-between items-center text-gray-500 text-[13px] md:text-[16px]">
+                    <span>Items</span>
+                    <span>{totalQty}</span>
+                    <span>₹{totalPrice}.00</span>
+                  </p>
+                  <p className="w-full flex justify-between items-center text-gray-500 text-[13px] md:text-[16px]">
+                    <span>Delivery</span>
+                    <span>₹00.00</span>
+                  </p>
+                </div>
+              )}
 
               {/* //address */}
               <div>
@@ -408,8 +484,6 @@ const Cart = () => {
                   </p>
                 </button>
               </div>
-
-
             </div>
           </div>
         </>
