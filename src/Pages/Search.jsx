@@ -9,11 +9,14 @@ const Search = () => {
   const navigate = useNavigate();
  const queryParams = new URLSearchParams(location.search);
 
+
   const isCartOpen = queryParams.get("cart") === "open";
    const closeCart = () => {
     queryParams.delete("cart");
     navigate(`${location.pathname}?${queryParams.toString()}`);
   };
+
+
   return (<>
     <div className='pt-[150px]'>
       <ShowProduct/>

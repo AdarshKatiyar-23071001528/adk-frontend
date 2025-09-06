@@ -62,6 +62,7 @@ const Layout = () => {
             <Route path="/shipping" element={<Address />} />
             <Route path="/confirmation" element={<OrderConfirmation />} />
             <Route path= "/search" element ={<Search/>}/>
+            <Route path= "/search/cn/:price" element ={<Search/>}/>
             <Route path= "/order/:orderId" element ={<SpecificOrder/>}/>
           </Routes>
         </Suspense>

@@ -80,7 +80,7 @@ const UserLogin = () => {
           className="flex flex-col justify-center h-full w-full p-7 gap-3"
           onSubmit={(e) => onLogin(e)}
         >
-          <h2 className="font-bold text-gray-700 text-[24px] font-bold md:text-[40px]">
+          <h2 className="font-bold text-gray-700 text-[24px]  md:text-[40px]">
             Login
           </h2>
           <div className="flex flex-col gap-3">

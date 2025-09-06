@@ -10,13 +10,14 @@ import AppContext from "../Context/AppContext";
 import Match from "./Match";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { IoMdShare, IoIosPricetags } from "react-icons/io";
-import { FaMoneyBill1Wave } from "react-icons/fa6";
-import { GiReturnArrow } from "react-icons/gi";
+
 import Loader from "./Loader";
+import Alert from "./Alert";
+import Tag from "./Tag";
 
 const ViewProduct = () => {
   //from context api
-  const { setCartLength } = useContext(AppContext);
+  const { setCartLength, userToken, cartItems } = useContext(AppContext);
 
   let { id } = useParams();
   const [specificProduct, setSpecificProduct] = useState(null);
@@ -28,6 +29,8 @@ const ViewProduct = () => {
   const isCartOpen = fetchParams.get("cart") === "open";
   const isRegisterOpen = fetchParams.get("register") === "open";
   const [like, setLike] = useState(false);
+  const [product, setProduct] = useState([]);
+  const [cartItem, setcartItem] = useState([]);
 
   const closeLogin = () => {
     fetchParams.delete("login");
@@ -39,6 +42,16 @@ const ViewProduct = () => {
   };
   const closeRegister = () => {
     fetchParams.delete("register");
+    navigate(`${location.pathname}?${fetchParams.toString()}`);
+  };
+  const isOpenAlert = fetchParams.get("alert") === "open";
+  const openAlert = () => {
+    fetchParams.set("alert", "open");
+    navigate(`${location.pathname}?${fetchParams.toString()}`);
+  };
+
+  const closeAlert = () => {
+    fetchParams.delete("alert");
     navigate(`${location.pathname}?${fetchParams.toString()}`);
   };
 
@@ -54,10 +67,13 @@ const ViewProduct = () => {
 
   //add cart
   const addCart = async (product) => {
-
     const userToken = localStorage.getItem("token");
-    if (!userToken) return alert("Login first");
-    const { _id, productPrice,  productCategory, productImg, productTitle } = product;
+    if (!userToken) {
+      openAlert();
+      return;
+    }
+    const { _id, productPrice, productCategory, productImg, productTitle } =
+      product;
     try {
       const res = await axios.post(
         "/api/cart/add",
@@ -77,18 +93,45 @@ const ViewProduct = () => {
           withCredentials: true,
         }
       );
-     
-      if (res.data.message !== "Updated Item") {
-        setCartLength(res.data.cart.items.length);
-        window.location.reload();
-      } else {
-        alert(res.data.message);
-      }
+
+      // if (res.data.message !== "Updated Item") {
+      //   setCartLength(res.data.cart.items.length);
+      //   window.location.reload();
+      // } else {
+      //   alert(res.data.message);
+      // }
     } catch (error) {
       console.log(error);
     }
   };
+    const decrease_qty = async (id) => {
+    console.log(id);
+    try {
+      const res = await axios.get(`/api/cart/decreaseQty/${id}`, {
+        headers: {
+          "Content-Type": "Application/json",
+          userToken: userToken,
+        },
+        withCredentials: true,
+      });
+      if (res?.data?.cart?.items) {
+        setcartItem(res.data.cart.items);
+      }
+      console.log(res);
+    } catch (error) {
+      console.error("Decrease Error : ", error.message);
+    }
+  };
 
+  const handleSubmit = (e, item) => {
+    e.preventDefault();
+    addCart(item);
+  };
+
+  const availInCart = (id) => {
+    const item = cartItem?.find((item) => item.productId === id);
+    return item ? item.productQty : 0;
+  };
   // find product
   useEffect(() => {
     const fetchProduct = async () => {
@@ -109,8 +152,28 @@ const ViewProduct = () => {
     fetchProduct();
   }, [id]);
 
-  if (loading) return <Loader/>;
-  if (!specificProduct) return <Loader/>;
+  // fetch cart
+  useEffect(() => {
+    const fetchCart = async () => {
+      if (!userToken) return;
+      try {
+        const res = await axios.get("/api/cart/show", {
+          headers: { userToken },
+          withCredentials: true,
+        });
+        if (res?.data?.cart?.items) {
+          setcartItem(res?.data?.cart?.items);
+        }
+      } catch (err) {
+        console.error("Cart fetch error:", err.message);
+      }
+    };
+
+    fetchCart();
+  }, [userToken, cartItems]);
+
+  if (loading) return <Loader />;
+  if (!specificProduct) return <Loader />;
 
   //Native share api
   const handleShare = async () => {
@@ -134,7 +197,10 @@ const ViewProduct = () => {
     <>
       <div className="flex flex-col md:flex-row h-fit gap-4 pt-[150px] pb-[100px] md:pt-[170px] w-full">
         {/* LEFT SIDE - IMAGE + PRICE */}
-        <div className=" md:sticky top-[150px]  md:w-1/2 flex flex-col gap-6 items-center md:rounded-xl shadow-md w-full">
+        <form
+          className=" md:sticky top-[150px]  md:w-1/2 flex flex-col gap-6 items-center md:rounded-xl shadow-md w-full"
+          onSubmit={(e) => handleSubmit(e, specificProduct)}
+        >
           <img
             src={specificProduct.productImg}
             alt="product"
@@ -145,14 +211,35 @@ const ViewProduct = () => {
             <p className="text-2xl font-bold text-gray-800">
               ₹ {specificProduct.productPrice}
             </p>
-            <button
-              className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-xl font-semibold transition duration-300 fixed bottom-0 right-0 w-full md:w-fit md:relative"
-              onClick={() => addCart(specificProduct)}
-            >
-              Add to Cart
-            </button>
+            {availInCart(specificProduct._id) <= 0 ? (
+              <button
+                type="submit"
+                className=" bg-pink-500 text-white px-5 py-2 rounded-lg w-full md:relative fixed bottom-0 left-0 md:w-1/4 z-60"
+                // onClick={() => addCart(item)}
+              >
+                Add To cart
+              </button>
+            ) : (
+              <div className="flex items-center gap-2 bg-white rounded-lg w-full md:relative fixed bottom-0 left-0 md:w-1/4 z-60 px-5 py-2 shadow  justify-around">
+                <button
+                  type="submit"
+                  // onClick={() => addCart(item)}
+                  className="text-green-500 text-xl"
+                >
+                  +
+                </button>
+                <p>{availInCart(specificProduct._id)}</p>
+                <button
+                  type="button"
+                  className="text-red-500 text-xl"
+                  onClick={() => decrease_qty(specificProduct._id)}
+                >
+                  -
+                </button>
+              </div>
+            )}
           </div>
-        </div>
+        </form>
 
         {/* RIGHT SIDE - DETAILS */}
         <div className="flex flex-col gap-4 md:w-1/2 bg-whtie  p-6 rounded-xl shadow-md ">
@@ -203,29 +290,33 @@ const ViewProduct = () => {
 
           {/* tag static */}
           <div className="w-full p-2">
-            <div className="flex justify-around gap-1 w-full">
+            {/* <div className="flex justify-around gap-1 w-full">
               <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center w-[25%]">
-                <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center" ><FaMoneyBill1Wave /></p>
-                <p className="text-center">Cash On delivery</p>
-              </h1>
-
-               <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center w-[25%]">
-                <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center" ><GiReturnArrow/></p>
-                <p className="text-center">7 Days Return</p>
+                <p className="text-green-400 text-[10px] md:text-[24px]  w-full flex items-center justify-center">
+                  <FaMoneyBill1Wave />
+                </p>
+                <p className="text-center text-[10px] md:text-[20px] text-pretty">Cash On delivery</p>
               </h1>
 
               <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center w-[25%]">
-                <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center" >< IoIosPricetags/></p>
-                <p className="text-center">Lowest Price</p>
+                <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center">
+                  <GiReturnArrow />
+                </p>
+                <p className="text-center text-[10px] md:text-[20px] text-pretty">7 Days Return</p>
               </h1>
 
-            </div>
+              <h1 className="p-2 md:p-4 flex flex-col items-center font-bold bg-blue-200 rounded-xl gap-2  justify-center w-[25%]">
+                <p className="text-green-400 text-[13px] md:text-[24px]  w-full flex items-center justify-center">
+                  <IoIosPricetags />
+                </p>
+                <p className="text-center text-[10px] md:text-[20px] text-pretty">Lowest Price</p>
+              </h1>
+            </div> */}
+
+             <Tag/>
           </div>
-
-
+         
         </div>
-
-        
       </div>
 
       <div className="w-full">
@@ -238,7 +329,7 @@ const ViewProduct = () => {
             onClick={closeLogin}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="rounded shadow-lg w-full h-full md:w-[400px] md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="shadow-lg w-full h-[400px] md:w-[400px] md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <UserLogin />
             </div>
           </div>
@@ -251,13 +342,13 @@ const ViewProduct = () => {
             onClick={closeRegister}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="rounded shadow-lg w-full h-full md:w-[400px] md:h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="bg-linear shadow-lg w-full md:w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
               <UserRegister />
             </div>
           </div>
         </>
       )}
-      {isCartOpen && (
+      {/* {isCartOpen && (
         <>
           <div
             className="fixed inset-0 bg-black bg-opacity-40 z-40"
@@ -270,6 +361,35 @@ const ViewProduct = () => {
             }`}
           >
             <Cart />
+          </div>
+        </>
+      )} */}
+
+      {isCartOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-40 z-40"
+          onClick={closeCart}
+        ></div>
+      )}
+
+      <div
+        className={`fixed top-0 right-0 h-full w-full md:w-[400px] bg-blue-300 z-50 transition-transform duration-300 ease-in-out overflow-y-auto shadow-lg ${
+          isCartOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <Cart />
+      </div>
+
+      {isOpenAlert && (
+        <>
+          <div
+            className="inset-0 fixed bg-black/40 z-50"
+            onClick={closeAlert}
+          />
+          <div className="fixed inset-0 z-50 pointer-events-none flex justify-center items-center">
+            <div className="shadow-lg w-full md:w-[400px]  h-[200px] pointer-events-auto flex justify-center items-center rounded-xl bg-linear relative">
+              <Alert />
+            </div>
           </div>
         </>
       )}

@@ -11,6 +11,7 @@ import OrderConfirmation from "./Pages/OrderConfirmation";
 import All_order from "./Pages/All_order";
 import CategorySection from "./Components/Product/CategorySection";
 import Banner from "./Components/Product/Banner";
+import Alert from "./Pages/Alert";
 
 const Home = () => {
   const location = useLocation();
@@ -22,6 +23,7 @@ const Home = () => {
   const isAddressOpen = queryParams.get("shipping") === "open";
   const isConfirmationOpen = queryParams.get("orderconfirm") === "open";
   const isSummaryOpen = queryParams.get("summary") === "open";
+  const isOpenAlert = queryParams.get("alert") === "open";
 
   const closeLogin = () => {
     queryParams.delete("login");
@@ -51,6 +53,12 @@ const Home = () => {
     navigate(`${location.pathname}?${queryParams.toString()}`);
   };
 
+
+  const closeAlert = () =>{
+    queryParams.delete("alert");
+    navigate(`${location.pathname}?${queryParams.toString()}`);
+  }
+
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") closeCart();
@@ -60,7 +68,7 @@ const Home = () => {
   }, []);
 
   return (
-    <section className="pt-[180px] md:pt-[150px] w-full ">
+    <section className="pt-[180px] md:pt-[150px] w-full h-screen ">
       <CategorySection/>
       <Banner />
       <ShowProduct />
@@ -130,7 +138,7 @@ const Home = () => {
             onClick={closeRegister}
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-            <div className="rounded shadow-lg w-full md:w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl">
+            <div className="rounded shadow-lg w-full md:w-[400px] h-[400px] pointer-events-auto  flex justify-center items-center rounded-xl bg-linear">
               <UserRegister />
             </div>
           </div>
@@ -148,6 +156,20 @@ const Home = () => {
               <All_order />
             </div>
           </div>
+        </>
+      )}
+
+
+      {isOpenAlert && (
+        <>
+        <div className="fixed inset-0 bg-black/40 z-50"
+          onClick={closeAlert}/>
+          <div className="fixed inset-0 z-50 pointer-events-none flex justify-center items-center">
+            <div className="shadow-lg md:w-[400px] w-full h-[200px] pointer-events-auto flex justify-center items-center rounded-xl bg-linear relative">
+              <Alert/>
+            </div>
+          </div>
+       
         </>
       )}
     </section>

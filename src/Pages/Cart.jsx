@@ -172,9 +172,9 @@ const Cart = () => {
       withCredentials: true,
     });
   };
-
   useEffect(() => {
     fetchCart();
+    // console.log("fetch cart call");
   }, [userToken,cartItems]);
 
   // fetch saved latest address from userid and store it on address

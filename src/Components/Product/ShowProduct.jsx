@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../../Context/AppContext";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Error from "../../Pages/Error";
 import axios from "../axios";
 import Loader from "../../Pages/Loader";
@@ -14,6 +14,9 @@ const slugify = (text) =>
     .replace(/[^\w\-]+/g, "");
 
 const ShowProduct = () => {
+
+  const {price} = useParams();
+
   const {
     setViewId,
     filterProduct,
@@ -33,8 +36,17 @@ const ShowProduct = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get("/api/product/all");
-        console.log(res);
-        setAllProduct(res?.data?.product || []);
+        console.log(price);
+        if(price){
+          const data = res?.data?.product;
+          const filter = data?.filter(item => item?.productPrice <= price)
+          setAllProduct( filter )
+        }
+        else{
+          console.log("run")
+           setAllProduct(res?.data?.product || []);
+        }
+       
       } catch (err) {
         console.error("Product fetch error:", err.message);
       }
@@ -42,6 +54,10 @@ const ShowProduct = () => {
 
     fetchProducts();
   }, []);
+
+
+
+
   // ✅ cart fetch
   useEffect(() => {
     const fetchCart = async () => {
@@ -70,6 +86,11 @@ const ShowProduct = () => {
     currentUrl.set("login", "open");
     navigate(`${location.pathname}?${currentUrl.toString()}`);
   };
+  const openAlert = () => {
+    const currentUrl = new URLSearchParams(location.search);
+    currentUrl.set("alert","open");
+    navigate(`${location.pathname}?${currentUrl.toString()}`);
+  }
 
   // filter Product
   useEffect(() => {
@@ -89,6 +110,9 @@ const ShowProduct = () => {
     }
   }, [filterProduct]);
 
+
+ 
+
   const availInCart = (id) => {
     const item = cartItem?.find((c) => c.productId === id);
     return item ? item.productQty : 0;
@@ -99,7 +123,7 @@ const ShowProduct = () => {
     // e.preventDefault();
     console.log(item);
     if (!userToken) {
-      openLogin();
+      openAlert();
       return;
     }
     try {

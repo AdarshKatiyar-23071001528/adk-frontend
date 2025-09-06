@@ -58,9 +58,9 @@ const UserRegister = () => {
   };
 
   return (
-    <div className="userRegister h-full w-full  flex justify-center items-center bg-blue-400 rounded-xl">
+    <div className="userRegister h-full w-full  flex justify-center items-center rounded-xl">
       <div className="RegisterContainer h-full w-full justify-center items-center flex overflow-hidden relative">
-        <div className="Register-logic-container z-10 flex items-center justify-center bg-white shadow-xl rounded-xl border h-full w-full relative">
+        <div className="Register-logic-container z-10 flex items-center justify-center  shadow-xl rounded-xl h-full w-full relative">
           <div
             className="absolute top-3 right-3 cursor-pointer text-red-700"
             onClick={closeRegister}
