@@ -68,7 +68,7 @@ const Home = () => {
   }, []);
 
   return (
-    <section className="pt-[180px] md:pt-[150px] w-full h-screen ">
+    <section className="pt-[180px] md:pt-[150px] w-full">
       <CategorySection/>
       <Banner />
       <ShowProduct />
